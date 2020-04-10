@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="total">
+    <div>
+      姓:
+      <input type="text" placeholder="输入姓" v-model="agoName"><br/>
+      名:
+      <input type="text" placeholder="输入名" v-model="thenName">
+    </div>
+    <hr/>
+    <div>
+      姓名:(单向):<input type="text" placeholder="输入姓名" v-model="combineName"><br/>
+      姓名:(单向):<input type="text" placeholder="输入姓名" v-model="combineName1"><br/>
+      姓名:(双向):<input type="text" placeholder="输入姓名" v-model="combineName2">
+    </div>
+  </div>
+  <script>
+    //创建实例
+    const vm=new Vue({
+      //获取id
+      el:'#total',
+      //数据对象
+      data:{
+        agoName:'南宫',
+        thenName:'紫嫣',
+        combineName1:''
+      },
+      computed:{
+        //获取操作
+        combineName(){
+          return this.agoName+'_'+this.thenName
+        },
+        combineName2:{
+          get(){
+            return this.agoName+'_'+this.thenName
+          },
+          set(count){
+            const card=count.split('_')
+            this.agoName=card[0]
+            this.thenName=card[1]
+          }
+        }
+      },
+
+      //监视
+      watch:{
+        //监视agoName
+        agoName(count){
+          this.combineName1=count+'_'+this.thenName
+        },
+
+        //监视thenName
+        thenName(count){
+          this.combineName1=this.agoName+'_'+count;
+        },
+
+      }
+    })
+  </script>
+</body>
+</html>

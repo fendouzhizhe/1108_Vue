@@ -20,5 +20,40 @@
       }
     })
   </script>
+
+
+  <div id="all">
+    <h2>{{information}}</h2>
+  </div>
+  <script>
+    //创建实例
+    const vm1=new Vue({
+      //获取ID
+      el:'#all',
+      //数据对象
+      data:{
+        information:'你好啊  啊啊啊啊啊啊'
+      }
+    })
+  </script>
+
+
+<div id="total">
+  <h3>{{news}}</h3>
+</div>
+<script>
+  //创建实例
+  const vm2=new Vue({
+    //获取ID
+    el:'#total',
+    //数据对象
+    data:{
+      news:'哈喽  VUE'
+    }
+  })
+</script>
+
+
+
 </body>
 </html>

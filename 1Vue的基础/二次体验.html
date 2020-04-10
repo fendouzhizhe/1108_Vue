@@ -1,26 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="../js/vue.js"></script>
-</head>
-<body>
-  <div id="wrap">
-    <input type="text" v-model="message">
-    <p>{{message}}</p>
-  </div>
-  <script>
-    //创建Vue的实例
-    const vm=new Vue({
-      //引入ID
-      el:'#wrap',
-      //数据对象
-      data:{
-        message:'你好啊'
-      }
-    })
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <input type="text" v-model="message" />
+      <p>{{message}}</p>
+    </div>
+    <script>
+      //创建Vue的实例
+      const vm = new Vue({
+        //引入ID
+        el: "#wrap",
+        //数据对象
+        data: {
+          message: "你好啊",
+        },
+      });
+    </script>
+
+    <div id="all">
+      <input type="text" v-model="information" />
+      <p>{{information}}</p>
+    </div>
+    <script>
+      //创建实例
+      const vm1 = new Vue({
+        //获取ID
+        el: "#all",
+        //数据对象
+        data: {
+          information: "你好啊  啊啊啊啊啊啊",
+        },
+      });
+    </script>
+
+    <div id="total">
+      <input type="text" v-model="news"/>
+      <p>{{news}}</p>
+    </div>
+    <script>
+      //创建实例
+      const vm2 = new Vue({
+        //获取ID
+        el: "#total",
+        //数据对象
+        data: {
+          news: "哈喽  VUE",
+        },
+      });
+    </script>
+  </body>
 </html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="all">
+    <button @click="swop">切换</button>
+    <p v-if="isChange">我喜欢你</p>
+    <p v-else>你喜欢我</p>
+    <hr>
+
+    <button @click="isSwop=!isSwop">切换1</button>
+    <p v-show="isSwop">我xiang你</p>
+  </div>
+  <script>
+    //创建实例化
+    const vm=new Vue({
+      //获取ID
+      el:'#all',
+      //数据对象
+      data:{
+        isChange:true,
+        isSwop:false
+      },
+      //方法
+      methods:{
+        swop(){
+          this.isChange=!this.isChange
+        }
+      }
+    })
+  </script>
+</body>
+</html>

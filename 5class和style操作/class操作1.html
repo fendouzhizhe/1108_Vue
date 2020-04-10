@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+  <style>
+    #all{
+      width: 600px;
+      border: 1px solid #000;
+      margin: 0px auto;
+    }
+    p{
+      text-align: center;
+    }
+    .con{
+      color:blue;
+    }
+    .con1{
+      color:green;
+    }
+    .con2{
+      font-size: 50px;
+    }
+    .con3{
+      font-family: 'Times New Roman', Times, serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="all">
+    <div>
+      <!-- 直接设置class值 -->
+      <p v-bind:class="content">锄禾日当午</p>
+      <button v-on:click="content='con1'">变样式</button>
+    </div>
+    <hr>
+    <div>
+      <!-- 使用对象的方式 -->
+      <p :class="{con:isTransfer}">汗滴禾下土</p>
+      <button @click="isTransfer=!isTransfer">变样式</button>
+    </div>
+    <hr>
+    <div>
+      <!-- 使用数组方式 -->
+      <p :class="[conA,conB]">谁知盘中餐</p>
+    </div>
+    <hr>
+    <div>
+      <!-- 动态绑定和静态绑定结合 -->
+      <p class="con" :class="conC" >粒粒皆辛苦</p>
+    </div>
+  </div>
+
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#all',
+      //数据对象
+      data:{
+        content:'con',
+        isTransfer:false,
+        conA:'con1',
+        conB:'con2',
+        conC:'con3'
+      }
+    })
+  </script>
+</body>
+</html>

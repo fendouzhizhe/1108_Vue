@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="total">
+    <button @click="submit">添加</button><br/>
+    商品名字:<input type="text" v-model="name"><br/>
+    价格:<input type="text" v-model="price"><br/>
+    描述:<input type="text" v-model="desc">
+
+    <ul>
+      <li v-for="(item,index) in commoditys" :key="index">
+        {{index}}-id:{{item.id}}-商品名字:{{item.name}}-价格:{{item.price}}-描述:{{item.desc}}
+        <button @click="concle(index)">删除</button>
+        <button @click="revamp(index,{id:++id,name,price,desc})">修改</button>
+      </li>
+    </ul>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#total',
+      //数据对象
+      data:{
+        name:'',
+        price:'',
+        desc:'',
+        id:4,
+        commoditys:[
+          {id:1,name:'卫衣',price:90,desc:'值得信赖'},
+          {id:2,name:'衬衫',price:60,desc:'小心受伤'},
+          {id:3,name:'裤子',price:100,desc:'加油，伙伴们'},
+        ]
+      },
+      methods:{
+        submit(){
+          //定义对象
+          const commodity={
+            id:++this.id,
+            name:this.name,
+            price:this.price,
+            desc:this.desc
+          }
+          //把对象添加到数组
+          this.commoditys.push(commodity)
+          //清空输入框
+          this.name=''
+          this.price=''
+          this.desc=''
+        },
+
+        //删除
+        concle(index){
+          this.commoditys.splice(index,1)
+        },
+
+        //修改
+        revamp(index,com){
+          this.commoditys[index].id=com.id
+          this.commoditys[index].name=com.name
+          this.commoditys[index].price=com.price
+          this.commoditys[index].desc=com.desc
+        }
+      }
+    })
+  </script>
+</body>
+</html>

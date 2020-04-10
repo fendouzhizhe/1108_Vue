@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+  <style>
+    #total{
+      width: 500px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="total">
+    <div>
+      <!-- 对象写法 -->
+      <p :style="{color:tint,fontSize:genre}">烟花三月下扬州</p>
+    </div>
+    <hr>
+    <div>
+      <!-- 数组写法 -->
+      <p :style="[tint1,genre1,cl]">孤帆远影碧空尽</p>
+    </div>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#total',
+      //数据对象
+      data:{
+        tint:'blue',
+        genre:'60px',
+        tint1:{color:'yellow'},
+        genre1:{fontSize:'50px'},
+        cl:{backgroundColor:'red'}
+      }
+    })
+  </script>
+</body>
+</html>

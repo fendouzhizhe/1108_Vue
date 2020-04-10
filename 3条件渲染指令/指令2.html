@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="total">
+    <button @click="exchange">切换</button>
+    <p v-if="isAlter">哈喽</p>
+    <p v-else>你好啊</p>
+    <hr>
+
+    <button @click="isToggle=!isToggle">切换1</button>
+    <p v-show="isToggle">vue  不错哦</p>
+  </div>
+  <script>
+    //创建实例化
+    const vm=new Vue({
+      //获取ID
+      el:'#total',
+      //数据对象
+      data:{
+        isAlter:true,
+        isToggle:false
+      },
+      //方法
+      methods:{
+        exchange(){
+          this.isAlter=!this.isAlter
+        }
+      }
+    })
+  </script>
+</body>
+</html>

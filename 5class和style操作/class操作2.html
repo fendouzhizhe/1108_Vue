@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+  <style>
+    #total{
+      width: 600px;
+      border: 1px solid #000;
+      margin: 0px auto;
+    }
+    p{
+      text-align: center;
+    }
+    .mat{
+      color:yellow;
+    }
+    .mat1{
+      color:deeppink;
+    }
+    .mat2{
+      font-size: 50px;
+    }
+    .mat3{
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="total">
+    <div>
+      <!-- 直接设置class值 -->
+      <p v-bind:class="matter">朝辞白帝彩云间</p>
+      <button v-on:click="matter='mat1'">变样式</button>
+    </div>
+    <hr>
+    <div>
+      <!-- 使用对象的方式 -->
+      <p :class="{con:isAlter}">千里江陵一日还</p>
+      <button @click="isAlter=!isAlter">变样式</button>
+    </div>
+    <hr>
+    <div>
+      <!-- 使用数组方式 -->
+      <p :class="[matA,matB]">两岸猿声啼不住</p>
+    </div>
+    <hr>
+    <div>
+      <!-- 动态绑定和静态绑定结合 -->
+      <p class="mat" :class="matC" >轻舟已过万重山</p>
+    </div>
+  </div>
+
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#total',
+      //数据对象
+      data:{
+        matter:'mat',
+        isAlter:false,
+        matA:'mat1',
+        matB:'mat2',
+        matC:'mat3'
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="total">
+    <h1>{{news}}</h1>
+    <h1>{{news.toLowerCase()}}</h1>
+    <hr>
+    <!-- 强制绑定数据 -->
+    <a v-bind:href="url">掘金</a>
+    <a :href="url">掘金</a>
+
+    <!-- 绑定事件 -->
+    <button v-on:click="mySay">wo说</button>
+    <!-- 简写 -->
+    <button @click="youSay">ni说</button>
+
+    <!-- 获取DOM元素 -->
+    <button @click="theySay">themSay</button>
+    <p ref="p2">vue  真好</p>
+  </div>
+
+  <script>
+    //创建实例
+    const vm=new Vue({
+      //获取ID
+      el:'#total',
+      //数据对象
+      data:{
+        news:'vue 你好',
+        url:'https://juejin.im/'
+      },
+      //方法
+      methods:{
+        mySay(){
+          console.log('see you la la')
+        },
+        youSay(){
+          console.log('me too')
+        },
+        theySay(){
+          this.$refs.p2.innerHTML="大家都好"
+        }
+      }
+    })
+  </script>
+</body>
+</html>

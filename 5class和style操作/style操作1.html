@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+  <style>
+    #all{
+      width: 500px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="all">
+    <div>
+      <!-- 对象写法 -->
+      <p :style="{color:hue,fontSize:mold}">春眠不觉晓</p>
+    </div>
+    <hr>
+    <div>
+      <!-- 数组写法 -->
+      <p :style="[hue1,mold1,bg]">处处闻啼鸟</p>
+    </div>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#all',
+      //数据对象
+      data:{
+        hue:'green',
+        mold:'80px',
+        hue1:{color:'pink'},
+        mold1:{fontSize:'50px'},
+        bg:{backgroundColor:'yellow'}
+      }
+    })
+  </script>
+</body>
+</html>

@@ -7,20 +7,20 @@
   <script src="../js/vue.js"></script>
 </head>
 <body>
-  <div id="wrap">
+  <div id="all">
     <fieldset>
       <legend>数组</legend>
-      <ul>
-        <li v-for="(item,index) in animal" :key="index">
-          {{index}}-id:{{item.id}}-姓名:{{item.name}}-性别:{{item.sex}}-年龄:{{item.age}}-爱好:{{item.like}}
+      <ol>
+        <li v-for="(item,index) in people" :key="index">
+          {{index}}-id:{{item.id}}-姓名:{{item.name}}-性别:{{item.sex}}-年龄:{{item.age}}
         </li>
-      </ul>
+      </ol>
     </fieldset>
 
     <fieldset>
       <legend>遍历对象</legend>
       <ul>
-        <li v-for="(key,value,index) in animal1">
+        <li v-for="(key,value,index) in people1">
           {{key}}-{{value}}-{{index}}
         </li>
       </ul>
@@ -32,20 +32,19 @@
     //创建实例
     const vm=new Vue({
       //获取ID
-      el:'#wrap',
+      el:'#all',
       //数据对象
       data:{
-        animal:[
-          {id:1,name:'团团',sex:'男',age:18,like:'竹子'},
-          {id:1,name:'圆圆',sex:'女',age:20,like:'玩'},
-          {id:1,name:'欢欢',sex:'男',age:22,like:'吃'},
-          {id:1,name:'蛋蛋',sex:'男',age:19,like:'睡'},
+        people:[
+          {id:1,name:'欧阳锋',sex:'男',age:18},
+          {id:1,name:'上官老',sex:'女',age:20},
+          {id:1,name:'黄浦江',sex:'男',age:22},
+          {id:1,name:'天上月',sex:'男',age:19},
         ],
-        animal1:{
-          name:'欧阳剑',
+        people1:{
+          name:'南宫轩',
           sex:'男',
-          age:40,
-          like:'打篮球'
+          age:40
         }
       }
     })

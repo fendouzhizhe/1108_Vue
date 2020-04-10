@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="total">
+    <fieldset>
+      <legend>数组</legend>
+      <ol>
+        <li v-for="(item,index) in product" :key="index">
+          {{index}}-id:{{item.id}}-名称:{{item.name}}-价格:{{item.price}}-描述:{{item.desc}}
+        </li>
+      </ol>
+    </fieldset>
+
+    <fieldset>
+      <legend>遍历对象</legend>
+      <ul>
+        <li v-for="(key,value,index) in product1">
+          {{key}}-{{value}}-{{index}}
+        </li>
+      </ul>
+    </fieldset>
+
+    
+  </div>
+  <script>
+    //创建实例
+    const vm=new Vue({
+      //获取ID
+      el:'#total',
+      //数据对象
+      data:{
+        product:[
+          {id:1,name:'羽毛球',price:3,desc:'good'},
+          {id:1,name:'蓝球',price:60,desc:'good'},
+          {id:1,name:'足球',price:50,desc:'good'},
+          {id:1,name:'乒乓球',price:5,desc:'good'},
+        ],
+        product1:{
+          name:'网球',
+          price:20,
+          desc:'good'
+        }
+      }
+    })
+  </script>
+</body>
+</html>

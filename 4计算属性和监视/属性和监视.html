@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="all">
+    <div>
+      姓:
+      <input type="text" placeholder="输入姓" v-model="frontName"><br/>
+      名:
+      <input type="text" placeholder="输入名" v-model="latterName">
+    </div>
+    <hr/>
+    <div>
+      姓名:(单向):<input type="text" placeholder="输入姓名" v-model="joinName"><br/>
+      姓名:(单向):<input type="text" placeholder="输入姓名" v-model="joinName1"><br/>
+      姓名:(双向):<input type="text" placeholder="输入姓名" v-model="joinName2">
+    </div>
+  </div>
+  <script>
+    //创建实例
+    const vm=new Vue({
+      //获取id
+      el:'#all',
+      //数据对象
+      data:{
+        frontName:'欧阳',
+        latterName:'娜娜',
+        joinName1:''
+      },
+      computed:{
+        //获取操作
+        joinName(){
+          return this.frontName+'_'+this.latterName
+        },
+        joinName2:{
+          get(){
+            return this.frontName+'_'+this.latterName
+          },
+          set(val){
+            const name=val.split('_')
+            this.frontName=name[0]
+            this.latterName=name[1]
+          }
+        }
+      },
+
+      //监视
+      watch:{
+        //监视frontName
+        frontName(val){
+          this.joinName1=val+'_'+this.latterName
+        },
+
+        //监视latterName
+        latterName(val){
+          this.joinName1=this.frontName+'_'+val;
+        },
+
+      }
+    })
+  </script>
+</body>
+</html>

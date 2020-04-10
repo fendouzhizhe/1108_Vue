@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="total">
+    <button v-on:click="price= '娇子(龙涎香细支)' ">显示smoking</button>
+    <p v-if="price=== '娇子(硬龙凤世纪朝)' ">10元以下</p>
+    <p v-else-if="price=== '娇子(金沙神韵)' ">10~20元</p>
+    <p v-else-if="price=== '娇子(红天之娇子)' ">20~30元</p>
+    <p v-else-if="price=== '娇子(龙涎香细支)' ">30~40元</p>
+    <p v-else>50元以上</p>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#total',
+      //数据对象
+      data:{
+        price:'娇子(龙涎香细支)'
+      }
+    })
+  </script>
+</body>
+</html>

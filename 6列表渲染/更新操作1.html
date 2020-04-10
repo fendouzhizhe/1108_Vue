@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="all">
+    <button @click="fortify">添加</button><br/>
+    商品名字:<input type="text" v-model="name"><br/>
+    价格:<input type="text" v-model="price"><br/>
+    描述:<input type="text" v-model="desc">
+
+    <ul>
+      <li v-for="(item,index) in shopings" :key="index">
+        {{index}}-id:{{item.id}}-商品名字:{{item.name}}-价格:{{item.price}}-描述:{{item.desc}}
+        <button @click="removed(index)">删除</button>
+        <button @click="amend(index,{id:++id,name,price,desc})">修改</button>
+      </li>
+    </ul>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#all',
+      //数据对象
+      data:{
+        name:'',
+        price:'',
+        desc:'',
+        id:4,
+        shopings:[
+          {id:1,name:'网球',price:80,desc:'值得信赖'},
+          {id:2,name:'足球',price:50,desc:'小心受伤'},
+          {id:3,name:'排球',price:60,desc:'加油，伙伴们'},
+        ]
+      },
+      methods:{
+        fortify(){
+          //定义对象
+          const shoping={
+            id:++this.id,
+            name:this.name,
+            price:this.price,
+            desc:this.desc
+          }
+          //把对象添加到数组
+          this.shopings.push(shoping)
+          //清空输入框
+          this.name=''
+          this.price=''
+          this.desc=''
+        },
+
+        //删除
+        removed(index){
+          this.shopings.splice(index,1)
+        },
+
+        //修改
+        amend(index,shop){
+          this.shopings[index].id=shop.id
+          this.shopings[index].name=shop.name
+          this.shopings[index].price=shop.price
+          this.shopings[index].desc=shop.desc
+        }
+      }
+    })
+  </script>
+</body>
+</html>

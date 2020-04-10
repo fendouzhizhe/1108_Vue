@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="all">
+    <button v-on:click="grades= '80~90分' ">显示相对于的分数级别</button>
+    <p v-if="grades=== '90~100分' ">优秀</p>
+    <p v-else-if="grades=== '80~90分' ">良好</p>
+    <p v-else-if="grades=== '70~80分' ">中上等</p>
+    <p v-else-if="grades=== '60~70分' ">及格</p>
+    <p v-else>不及格</p>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#all',
+      //数据对象
+      data:{
+        grades:'80~90分'
+      }
+    })
+  </script>
+</body>
+</html>
