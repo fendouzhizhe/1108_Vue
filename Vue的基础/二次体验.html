@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="wrap">
+    <input type="text" v-model="message">
+    <p>{{message}}</p>
+  </div>
+  <script>
+    //创建Vue的实例
+    const vm=new Vue({
+      //引入ID
+      el:'#wrap',
+      //数据对象
+      data:{
+        message:'你好啊'
+      }
+    })
+  </script>
+</body>
+</html>

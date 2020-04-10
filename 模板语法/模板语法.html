@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="wrap">
+    <h1>{{message}}</h1>
+    <h1>{{message.toUpperCase()}}</h1>
+    <hr>
+    <!-- 强制绑定数据 -->
+    <a v-bind:href="url">百度</a>
+    <a :href="url">百度</a>
+
+    <!-- 绑定事件 -->
+    <button v-on:click="hallo">wo说</button>
+    <!-- 简写 -->
+    <button @click="hallo1">ni说</button>
+
+    <!-- 获取DOM元素 -->
+    <button @click="speak">themSay</button>
+    <p ref="p1">真好啊啊啊啊啊啊啊啊 啊</p>
+  </div>
+
+  <script>
+    //创建实例
+    const vm=new Vue({
+      //获取ID
+      el:'#wrap',
+      //数据对象
+      data:{
+        message:'ni hao a a a aa ',
+        url:'http://www.baidu.com'
+      },
+      //方法
+      methods:{
+        hallo(){
+          console.log('你好啊')
+        },
+        hallo1(){
+          console.log('我不好啊')
+        },
+        speak(){
+          this.$refs.p1.innerHTML="hahahahaha"
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="wrap">
+    <button @click="change">切换</button>
+    <p v-if="isCut">我爱你</p>
+    <p v-else>你爱我</p>
+    <hr>
+
+    <button @click="isReplace=!isReplace">切换1</button>
+    <p v-show="isReplace">我不喜欢你</p>
+  </div>
+  <script>
+    //创建实例化
+    const vm=new Vue({
+      //获取ID
+      el:'#wrap',
+      //数据对象
+      data:{
+        isCut:true,
+        isReplace:false
+      },
+      //方法
+      methods:{
+        change(){
+          this.isCut=!this.isCut
+        }
+      }
+    })
+  </script>
+</body>
+</html>
