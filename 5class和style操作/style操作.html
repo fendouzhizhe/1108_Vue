@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+  <style>
+    #wrap{
+      width: 500px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <div>
+      <!-- 对象写法 -->
+      <p v-bind:style="{color:myCl,fontSize:myFt}">哈喽啊</p>
+    </div>
+    <hr>
+    <div>
+      <!-- 数组写法 -->
+      <p :style="[myCl1,myFt1,bgCl]">加油吧，少年！</p>
+    </div>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#wrap',
+      //数据对象
+      data:{
+        myCl:'pink',
+        myFt:'80px',
+        myCl1:{color:'red'},
+        myFt1:{fontSize:'50px'},
+        bgCl:{backgroundColor:'blue'}
+      }
+    })
+  </script>
+</body>
+</html>

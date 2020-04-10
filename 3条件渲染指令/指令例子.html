@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="wrap">
+    <button v-on:click="rank= 'A' ">显示相对于的分数级别</button>
+    <p v-if="rank=== 'A' ">90~100分</p>
+    <p v-else-if="rank=== 'B' ">80~90分</p>
+    <p v-else-if="rank=== 'C' ">70~80分</p>
+    <p v-else-if="rank=== 'D' ">60~70分</p>
+    <p v-else>不及格</p>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#wrap',
+      //数据对象
+      data:{
+        rank:'A'
+      }
+    })
+  </script>
+</body>
+</html>

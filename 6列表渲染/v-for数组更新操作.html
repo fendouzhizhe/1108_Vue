@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+  <div id="wrap">
+    <button @click="append">添加</button><br/>
+    商品名字:<input type="text" v-model="name"><br/>
+    价格:<input type="text" v-model="price"><br/>
+    描述:<input type="text" v-model="desc">
+
+    <ul>
+      <li v-for="(item,index) in products" :key="index">
+        {{index}}-id:{{item.id}}-商品名字:{{item.name}}-价格:{{item.price}}-描述:{{item.desc}}
+        <button @click="del(index)">删除</button>
+        <button @click="date(index,{id:++id,name,price,desc})">修改</button>
+      </li>
+    </ul>
+  </div>
+  <script>
+    //创建Vue实例
+    const vm=new Vue({
+      //获取ID
+      el:'#wrap',
+      //数据对象
+      data:{
+        name:'',
+        price:'',
+        desc:'',
+        id:4,
+        products:[
+          {id:1,name:'羽毛球',price:2.5,desc:'一个不掉毛的羽毛球'},
+          {id:2,name:'篮球',price:60,desc:'值得锻炼身体的运动产品'},
+          {id:3,name:'乒乓球',price:3,desc:'值得动脑筋的运动'},
+        ]
+      },
+      methods:{
+        append(){
+          //定义对象
+          const product={
+            id:++this.id,
+            name:this.name,
+            price:this.price,
+            desc:this.desc
+          }
+          //把对象添加到数组
+          this.products.push(product)
+          //清空输入框
+          this.name=''
+          this.price=''
+          this.desc=''
+        },
+
+        //删除
+        del(index){
+          this.products.splice(index,1)
+        },
+
+        //修改
+        date(index,pro){
+          this.products[index].id=pro.id
+          this.products[index].name=pro.name
+          this.products[index].price=pro.price
+          this.products[index].desc=pro.desc
+        }
+      }
+    })
+  </script>
+</body>
+</html>

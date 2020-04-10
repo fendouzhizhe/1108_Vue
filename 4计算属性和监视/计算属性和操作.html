@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>haha</title>
+  <script src="../js/vue.js"></script>
+</head>
+
+<body>
+  <div id="wrap">
+    <fieldset>
+      <legend>姓名操作</legend>
+      姓氏:
+      <input type="text" placeholder="请输入姓名" v-model="beforeName"><br />
+      名字:
+      <input type="text" placeholder="请输入名字" v-model="afterName"><br />
+    </fieldset>
+    <fieldset>
+      <legend>单向和双向操作</legend>
+      姓名(单向操作):<input type="text" placeholder="显示姓名" v-model="sumName1"><br />
+      姓名(单向操作):<input type="text" placeholder="显示姓名" v-model="sumName2"><br />
+      姓名(双向操作):<input type="text" placeholder="显示姓名" v-model="sumName3"><br />
+    </fieldset>
+  </div>
+  <script>
+    // 创建实例对象
+    const vm = new Vue({
+      el: '#wrap',
+      // 数据对象
+      data: {
+        beforeName: '淳于',
+        afterName: '珊珊',
+        sumName2: ''
+      },
+      // 计算属性
+      computed: {
+        // 获取get操作
+        sumName1() {
+          // 返回结果
+          return this.beforeName + '_' + this.afterName
+        },
+        sumName3: {
+          // get操作
+          get() {
+            return this.beforeName + '_' + this.afterName
+          },
+          // set操作
+          set(value) { 
+            // sumName3='淳于_珊珊'
+            const name = value.split('_')
+            this.beforeName = name[0]
+            this.afterName = name[1]
+
+          }
+        }
+      },
+      // 监视
+      watch: {
+        // 监视beforeName 
+        beforeName(value) { 
+          this.sumName2 = value + '_' + this.afterName
+        },
+        
+        //   this.sumName2 = this.beforeName + '_' + value
+        // },
+      }
+    })
+
+
+    vm.$watch('afterName', function (value) {
+      this.sumName2 = this.beforeName + '_' + value
+    })
+
+
+    
+
+
+  </script>
+</body>
+
+</html>
