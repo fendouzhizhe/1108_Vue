@@ -1,59 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>动画</title>
     <script src="../js/vue.js"></script>
     <style type="text/css">
-        p {
-            background-color: pink;
-            width: 100px;
-            text-align: center;
+      p {
+        background-color: pink;
+        width: 100px;
+        text-align: center;
+      }
+      /*显示*/
+      .spandex-enter-active {
+        animation: spandex 1s;
+      }
+      /*隐藏*/
+      .spandex-leave-active {
+        animation: spandex 1s reverse;
+      }
+      /*动画*/
+      @keyframes spandex {
+        0% {
+          transform: rotate(30deg);
         }
-        /*显示*/
-        .spandex-enter-active{
-            animation: spandex 1s;
+        50% {
+          transform: rotate(-30deg);
         }
-        /*隐藏*/
-        .spandex-leave-active{
-            animation: spandex 1s reverse;
+        100% {
+          transform: rotate(0deg);
         }
-        /*动画*/
-        @keyframes spandex{
-            0%{
-                transform: rotate(30deg)
-            }
-            50%{
-                transform: rotate(-30deg)
-            }
-            100%{
-                transform: rotate(0deg)
-            }
-        }
-
-     
-
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="total">
-        <button @click="exhibition=!exhibition">显示动画</button>
-       <transition name="spandex">
-            <p v-show="exhibition">看效果</p>
-       </transition>
+      <button @click="exhibition=!exhibition">显示动画</button>
+      <transition name="spandex">
+        <p v-show="exhibition">看效果</p>
+      </transition>
     </div>
     <script type="text/javascript">
-        const vm = new Vue({
-            el: '#total',
-            data: {
-              exhibition: true
-            }
-        })
+      const vm = new Vue({
+        el: "#total",
+        data: {
+          exhibition: true,
+        },
+      });
     </script>
-</body>
-
+  </body>
 </html>
