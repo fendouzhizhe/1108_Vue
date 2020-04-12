@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>生命周期</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="all">
+      <button @click="clearVm">删除vm和定时器</button>
+      <p v-show="isOk">dasbab</p>
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#all",
+        data: {
+          isOk: true,
+        },
+        beforeDestroy() {
+          clearInterval(this.timeId);
+        },
+        mounted() {
+          this.timeId = setInterval(() => {
+            this.isOk = !this.isOk;
+          }, 1000);
+        },
+        methods: {
+          clearVm() {
+            this.$destroy();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>生命周期v测试</title>
+    <script src="../js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="wrap">
+      <button @click="clear">显示效果</button>
+      <p v-show="isTrue">你打我啊</p>
+      <input type="text" v-model="test" />
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#wrap",
+        data: {
+          isTrue: true,
+          test: "",
+        },
+        //生命周期初始化
+        beforeCreate() {
+          console.log("初始化之前:" + this.isTrue);
+        },
+        //初始化后
+        created() {
+          console.log("初始化之后:" + this.isTrue);
+        },
+        //页面渲染前
+        beforeMount() {
+          console.log("页面显示前");
+        },
+        //页面渲染后
+        mounted() {
+          console.log("页面显示后");
+          setInterval(() => {
+            this.isTrue = !this.isTrue;
+          }, 3000);
+        },
+        //页面更新前
+        beforeUpdate() {
+          console.log("更新前");
+        },
+        //页面更新后
+        updated() {
+          console.log("更新后");
+        },
+        //实例删除前
+        beforeDestroy() {
+          console.log("销毁前");
+        },
+        //实例删除后
+        destroyed() {
+          console.log("销毁了");
+        },
+        methods: {
+          clear() {
+            this.$destroy();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

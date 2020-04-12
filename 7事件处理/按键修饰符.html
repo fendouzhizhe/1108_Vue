@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>按键修饰符</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <input type="text" value="" v-model="message" @keyup="upHandler1" />
+      <input type="text" value="" v-model="message" @keyup.enter="upHandler2" />
+      <input type="text" value="" v-model="message" @keyup.13="upHandler3" />
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#wrap",
+        data: {
+          message: "哈喽",
+        },
+        methods: {
+          upHandler1(e) {
+            if (e.keyCode === 13) {
+              console.log("回车按下了");
+            }
+          },
+          upHandler2() {
+            console.log("按下了回车");
+          },
+          upHandler3() {
+            console.log("又按下了回车");
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

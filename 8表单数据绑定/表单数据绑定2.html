@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>绑定数据</title>
+    <script src="../js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="total">
+      <h2>表单数据绑定</h2>
+      <form action="xxx/" method="post">
+        <fieldset>
+          <legend>帐号和密码</legend>
+          账号: <input type="text" v-model="users.name" /><br />
+          密码: <input type="password" v-model="users.password" /><br />
+        </fieldset>
+        <fieldset>
+          <legend>性别选择器</legend>
+          <input type="radio" name="gender" value="男" v-model="users.gender" />男
+          <input type="radio" name="gender" value="女" v-model="users.gender" />女
+        </fieldset>
+        <fieldset>
+          <legend>爱好选择</legend>
+          <input type="checkbox" value="smoking" v-model="users.hobbies" />抽
+          <input type="checkbox" value="love" v-model="users.hobbies" />你
+          <input type="checkbox" value="play" v-model="users.hobbies" />打豆豆
+        </fieldset>
+        <fieldset>
+          <legend>城市选择和文本内容</legend>
+          <select v-model="users.animalId">
+            <optgroup label="动物之王">
+              <option v-for="(item,index) in users.animals" :key="index" :value="item.id">{{item.name}}</option>
+            </optgroup>
+          </select>
+          <br />
+          <textarea v-model="users.info" name="" id="" cols="80" rows="5">
+哈哈</textarea
+          >
+        </fieldset>
+        <input type="submit" value="注册" @click.prevent="register" />
+      </form>
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        //获取ID
+        el: "#total",
+        //数据对象
+        data:{
+          users:{
+            name: "",
+            password: "",
+            gender: "男",
+            hobbies: ["smoking"],
+            animalId: 3,
+            animals: [
+              { id: 1, name: "老虎" },
+              { id: 2, name: "狮子" },
+              { id: 3, name: "东北豹" },
+              { id: 4, name: "猩猩" },
+            ],
+            info: "哈喽  animal",
+          },
+        },
+        methods: {
+          register() {
+            console.log(this.users.name + "===" + this.users.password);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

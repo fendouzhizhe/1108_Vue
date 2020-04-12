@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>修饰符</title>
+    <script src="../js/vue.js"></script>
+    <style type="text/css">
+      .sw1 {
+        width: 200px;
+        height: 100px;
+        background-color: blue;
+      }
+
+      .sw2 {
+        width: 100px;
+        height: 50px;
+        background-color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="wrap">
+      <h2>事件修饰符</h2>
+      <a href="http://www.baidu.com" @click="show1">百度1</a>
+      <a href="http://www.baidu.com" @click.prevent="show2">百度2</a>
+      <div class="sw1" @click="divShow1">
+        <div class="sw2" @click="divShow2"></div>
+      </div>
+      <hr />
+      <div class="sw1" @click="divShow3">
+        <div class="sw2" @click.stop="divShow4"></div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#wrap",
+        methods: {
+          show1(e) {
+            console.log("第一个超链接被点击了");
+            e.preventDefault();
+          },
+          show2() {
+            console.log("第二个超链接被点击了");
+          },
+          divShow1() {
+            console.log("外面的div被点了");
+          },
+          divShow2(e) {
+            console.log("里面div被点了");
+            e.stopPropagation();
+          },
+          divShow3() {
+            console.log("外面div点了");
+          },
+          divShow4() {
+            console.log("里面div被点了");
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

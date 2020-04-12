@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>绑定数据</title>
+    <script src="../js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="all">
+      <h2>表单数据绑定</h2>
+      <form action="xxx/" method="post">
+        <fieldset>
+          <legend>帐号和密码</legend>
+          账号: <input type="text" v-model="users.name" /><br />
+          密码: <input type="password" v-model="users.passed" /><br />
+        </fieldset>
+        <fieldset>
+          <legend>性别选择器</legend>
+          <input type="radio" name="gender" value="男" v-model="users.sex" />男
+          <input type="radio" name="gender" value="女" v-model="users.sex" />女
+        </fieldset>
+        <fieldset>
+          <legend>爱好选择</legend>
+          <input type="checkbox" value="eat" v-model="users.hobbies" />吃饭
+          <input type="checkbox" value="sleep" v-model="users.hobbies" />睡觉
+          <input type="checkbox" value="play" v-model="users.hobbies" />打豆豆
+        </fieldset>
+        <fieldset>
+          <legend>城市选择和文本内容</legend>
+          <select v-model="users.productId">
+            <optgroup label="中国制造">
+              <option v-for="(item,index) in users.products" :key="index" :value="item.id">{{item.name}}</option>
+            </optgroup>
+          </select>
+          <br />
+          <textarea v-model="users.info" name="" id="" cols="80" rows="5">
+哈哈</textarea
+          >
+        </fieldset>
+        <input type="submit" value="注册" @click.prevent="register" />
+      </form>
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        //获取ID
+        el: "#all",
+        //数据对象
+        data:{
+          users:{
+            name: "",
+            passed: "",
+            sex: "女",
+            hobbies: ["play"],
+            productId: 2,
+            products: [
+              { id: 1, name: "羽毛球" },
+              { id: 2, name: "蓝球" },
+              { id: 3, name: "足球" },
+              { id: 4, name: "乒乓球" },
+            ],
+            info: "ni hao a ",
+          },
+        },
+        methods: {
+          register() {
+            console.log(this.users.name + "===" + this.users.passed);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

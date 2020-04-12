@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>生命周期v测试</title>
+    <script src="../js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="all">
+      <button @click="clear">删除Vm</button>
+      <p v-show="isOk">你打我啊</p>
+      <button @click="update">更新数据</button>
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#all",
+        data: {
+          isOk: false
+          
+        },
+        //生命周期初始化
+        beforeCreate() {
+          console.log("初始化之前:" + this.isOk);
+        },
+        //初始化后
+        created() {
+          console.log("初始化之后:" + this.isOk);
+        },
+        //页面渲染前
+        beforeMount() {
+          console.log("页面显示前");
+        },
+        //页面渲染后
+        mounted() {
+          console.log("页面显示后");
+          
+        },
+        //页面更新前
+        beforeUpdate() {
+          console.log("更新前",this.isOk);
+        },
+        //页面更新后
+        updated() {
+          console.log("更新后",this.isOk);
+        },
+        //实例删除前
+        beforeDestroy() {
+          console.log("销毁前");
+        },
+        //实例删除后
+        destroyed() {
+          console.log("销毁了");
+        },
+        methods: {
+          //修改数据
+          update(){
+            this.isOk=!this.isOk
+          },
+          //删除实例
+          clear() {
+            this.$destroy();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

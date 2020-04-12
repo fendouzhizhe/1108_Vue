@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>事件获取</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <h2>事件监听</h2>
+      <button @click="reveal('ni hao a ')">按钮1</button>
+      <button @click="reveal2($event)">按钮2</button>
+    </div>
+    <script type="text/javascript">
+      const vm=new Vue({
+        //获取ID
+        el:'#wrap',
+        //方法
+        methods: {
+          reveal(a){
+            console.log(a)
+          },
+          reveal2(event){
+            console.log(event);
+            
+          }
+        }
+
+      })
+    </script>
+  </body>
+</html>

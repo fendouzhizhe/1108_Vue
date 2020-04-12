@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>修饰符</title>
+    <script src="../js/vue.js"></script>
+    <style type="text/css">
+      .ds1 {
+        width: 200px;
+        height: 100px;
+        background-color: blue;
+      }
+
+      .ds2 {
+        width: 100px;
+        height: 50px;
+        background-color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="all">
+      <h2>事件修饰符</h2>
+      <a href="http://www.atguigu.com" @click="gshow1">百度1</a>
+      <a href="http://www.atguigu.com" @click.prevent="gshow2">百度2</a>
+      <div class="ds1" @click="divShow1">
+        <p class="ds2" @click="pShow2"></p>
+      </div>
+      <hr />
+      <div class="ds1" @click="divShow3">
+        <p class="ds2" @click.stop="pShow4"></p>
+      </div>
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#all",
+        methods: {
+          gshow1(e) {
+            console.log("第一个超链接被点击了");
+            e.preventDefault();
+          },
+          gshow2() {
+            console.log("第二个超链接被点击了");
+          },
+          divShow1() {
+            console.log("外面的div被点了");
+          },
+          pShow2(e) {
+            console.log("里面p被点了");
+            e.stopPropagation();
+          },
+          divShow3() {
+            console.log("外面div点了");
+          },
+          pShow4() {
+            console.log("里面p被点了");
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

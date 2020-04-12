@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>按键修饰符</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="total">
+      <input type="text" value="" v-model="news" @keyup="msg" />
+      <input type="text" value="" v-model="news" @keyup.enter="msg1" />
+      <input type="text" value="" v-model="news" @keyup.13="msg2" />
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#total",
+        data: {
+          news: "",
+        },
+        methods: {
+          msg(e) {
+            if (e.keyCode === 13) {
+              console.log(this.news);
+            }
+          },
+          msg1() {
+            console.log(this.news);
+          },
+          msg2() {
+            console.log(this.news);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

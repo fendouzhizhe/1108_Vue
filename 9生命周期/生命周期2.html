@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>生命周期</title>
+    <script src="../js/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="total">
+      <button @click="clear">删除vm和定时器</button>
+      <p v-show="isExhibition">哈喽  Vue</p>
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#total",
+        data: {
+          isExhibition: true,
+        },
+        beforeDestroy() {
+          clearInterval(this.timeId);
+        },
+        mounted() {
+          this.timeId = setInterval(() => {
+            this.isExhibition = !this.isExhibition;
+          }, 1000);
+        },
+        methods: {
+          clear() {
+            this.$destroy();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
