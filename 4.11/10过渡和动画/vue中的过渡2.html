@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>过渡</title>
+	<script src="../js/vue.js"></script>
+	<style type="text/css">
+		.crossAppear-enter-active,
+		.crossAppear-leave-action {
+			transition: opacity 2s
+		}
+
+		.crossAppear-enter,
+		.crossAppear-leave-to {
+			opacity: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="all">
+		<button @click="isTrue=!isTrue">切换效果</button>
+		<transition name="crossAppear">
+				<p v-show="isTrue">我是haoren</p>
+		</transition>
+	</div>
+
+	<script type="text/javascript">
+		const vm = new Vue({
+			el: '#all',
+			data: {
+				isTrue: false
+			}
+		})
+	</script>
+</body>
+
+</html>
