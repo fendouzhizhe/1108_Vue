@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>过滤器</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="wrap">
+      <h2>显示时间</h2>
+      <h3>{{stateTime}}</h3>
+      <h3>{{stateTime|formatDate1}}</h3>
+      <h3>{{stateTime|formatDate2}}</h3>
+      <h3>{{stateTime|formatDate3('YY-MM-DD')}}</h3>
+      <h3>{{stateTime|formatDate3('HH:mm:ss')}}</h3>
+    </div>
+    <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.js"></script>
+    <script type="text/javascript">
+      Vue.filter("formatDate1", (value) => {
+        return moment(value).format("YYYY-MM-DD HH:mm:ss");
+      });
+      Vue.filter(
+        "formatDate2",
+        (value, formatString = "YYYY-MM-DD HH:mm:ss") => {
+          return moment(value).format(formatString);
+        }
+      );
+      Vue.filter("formatDate3", (value, formatString) => {
+        return moment(value).format(formatString || "YYY-MM-DD HH:mm:ss");
+      });
+
+      const vm = new Vue({
+        el: "#wrap",
+        data: {
+          stateTime: Date.now(),
+        },
+      });
+    </script>
+  </body>
+</html>

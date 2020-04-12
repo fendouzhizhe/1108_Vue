@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>过渡</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+    <style type="text/css">
+      div:nth-child(2) {
+        background-color: blue;
+        width: 100px;
+        text-align: center;
+      }
+      .myCrossAppear-enter-active {
+        transition: all 3s;
+      }
+      .myCrossAppear-leave-active {
+        transition: all 5s;
+      }
+      .myCrossAppear-enter,
+      .myCrossAppear-leave-to {
+        transform: translateX(100px);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="all">
+      <button @click="show=!show">实现过渡</button>
+      <transition name="myCrossAppear">
+        <div v-show="show">哈哈哈哈哈哈</div>
+      </transition>
+    </div>
+    <script type="text/javascript">
+      const vm = new Vue({
+        el: "#all",
+        data: {
+          show: true,
+        },
+      });
+    </script>
+  </body>
+</html>

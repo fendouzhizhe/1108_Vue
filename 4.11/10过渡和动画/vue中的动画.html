@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画</title>
+    <script src="../js/vue.js"></script>
+    <style type="text/css">
+        p {
+            background-color: blue;
+            width: 100px;
+            text-align: center;
+        }
+        /*显示*/
+        .elastic-enter-active{
+            animation: elastic .5s;
+        }
+        /*隐藏*/
+        .elastic-leave-active{
+            animation: elastic .5s reverse;
+        }
+        /*动画*/
+        @keyframes elastic{
+            0%{
+                transform: scale(1)
+            }
+            50%{
+                transform: scale(2)
+            }
+            100%{
+                transform: scale(1)
+            }
+        }
+
+     
+
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <button @click="ok=!ok">显示动画效果</button>
+       <transition name="elastic">
+            <p v-show="ok">看效果</p>
+       </transition>
+    </div>
+    <script type="text/javascript">
+        const vm = new Vue({
+            el: '#wrap',
+            data: {
+              ok: true
+            }
+        })
+    </script>
+</body>
+
+</html>

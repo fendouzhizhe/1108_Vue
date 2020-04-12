@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>动画</title>
+    <script src="../js/vue.js"></script>
+    <style type="text/css">
+        p {
+            background-color: yellow;
+            width: 100px;
+            text-align: center;
+        }
+        /*显示*/
+        .lycra-enter-active{
+            animation: lycra 1s;
+        }
+        /*隐藏*/
+        .lycra-leave-active{
+            animation: lycra 1s reverse;
+        }
+        /*动画*/
+        @keyframes lycra{
+            0%{
+                transform: rotate(30deg)
+            }
+            50%{
+                transform: rotate(90deg)
+            }
+            100%{
+                transform: rotate(0deg)
+            }
+        }
+
+     
+
+    </style>
+</head>
+
+<body>
+    <div id="all">
+        <button @click="show=!show">显示动画</button>
+       <transition name="lycra">
+            <p v-show="show">看效果</p>
+       </transition>
+    </div>
+    <script type="text/javascript">
+        const vm = new Vue({
+            el: '#all',
+            data: {
+              show: true
+            }
+        })
+    </script>
+</body>
+
+</html>

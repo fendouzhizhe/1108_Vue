@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>自定义指令</title>
+    <script src="../js/vue.js"></script>
+    <style type="text/css">
+      p {
+        border: 1px solid blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="wrap">
+      <p v-upper-matter="matter"></p>
+      <p v-lower-matter="matter"></p>
+    </div>
+    <script type="text/javascript">
+      //全局
+      Vue.directive("upper-matter", function (el, binding) {
+        el.textContent = binding.value.toUpperCase();
+      });
+      const vm = new Vue({
+        el: "#wrap",
+        data: {
+          matter: "Wo hAo Xiao nI a",
+        },
+        //局部
+        directives: {
+          "lower-matter"(el, binding) {
+            el.innerHTML = binding.value.toLowerCase();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

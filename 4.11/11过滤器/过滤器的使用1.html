@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>过滤器</title>
+    <script src="../js/vue.js"></script>
+  </head>
+  <body>
+    <div id="all">
+      <h2>显示时间</h2>
+      <h3>{{schedule}}</h3>
+      <h3>{{schedule|fmDates1}}</h3>
+      <h3>{{schedule|fmDates2}}</h3>
+      <h3>{{schedule|fmDates3('HH:mm:ss')}}</h3>
+    </div>
+    <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment.js"></script>
+    <script type="text/javascript">
+      Vue.filter("fmDates1", (value) => {
+        return moment(value).format("YYYY-MM-DD HH:mm:ss");
+      });
+      Vue.filter(
+        "fmDates2",
+        (value, String = "YYYY-MM-DD HH:mm:ss") => {
+          return moment(value).format(String);
+        }
+      );
+      Vue.filter("fmDates3", (value, String) => {
+        return moment(value).format(String || "YYY-MM-DD HH:mm:ss");
+      });
+
+      const vm = new Vue({
+        el: "#all",
+        data: {
+          schedule: Date.now(),
+        },
+      });
+    </script>
+  </body>
+</html>
