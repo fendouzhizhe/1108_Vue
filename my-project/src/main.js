@@ -1,13 +1,15 @@
-// 引入Vue
 import Vue from 'vue'
-// 引入App组件
-import App from './App.vue'
-// 设置浏览器控制不显示提示信息
+import App from './App'
+
+// 设置浏览器控制台的提示是否显示
 Vue.config.productionTip = false
-// 实例化Vue
+
+// 实例化
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  components: { App },
-  template: '<App />'
+  components: {
+    App
+  },
+  template: `<App />`
 })
