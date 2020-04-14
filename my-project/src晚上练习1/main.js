@@ -1,15 +1,15 @@
-import App from './App'
-import VueResource from 'vue-resource'
 import Vue from 'vue'
+import App from './App'
 
-Vue.use(VueResource)
-
+// 设置浏览器控制台的提示是否显示
 Vue.config.productionTip = false
+
+// 实例化
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   components: {
     App
   },
-  template: `<App/>`
+  template: `<App />`
 })
