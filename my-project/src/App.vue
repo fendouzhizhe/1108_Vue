@@ -1,39 +1,40 @@
 <template>
+  <!-- <div> -->
+  <!--路由链接-->
+  <!-- <router-link to="/about">About</router-link> -->
+  <!--路由视图-->
+  <!-- <router-view></router-view> -->
+  <!-- </div> -->
   <div>
-    <h2 v-if="!repUrl">正在加载....</h2>
-    <h2>
-      Most Star is
-      <a :href="repUrl">{{repName}}</a>
-    </h2>
+    <div class="row">
+      <div class="col-xs-offset-2 col-xs-8">
+        <div class="page-header">
+          <h2>Router Basic - 01</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2 col-xs-offset-2">
+        <div class="list-group">
+          <router-link to="/about" class="list-group-item">About</router-link>
+          <router-link to="/home" class="list-group-item">Home</router-link>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        <div class="panel">
+          <div class="panel-body">
+            <router-view></router-view>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
+
 export default {
-  name: 'App',
-  data () {
-    return {
-      repUrl: '',
-      repName: ''
-    }
-  },
-  mounted () {
-    // 发送异步请求
-    const url = `https://api.github.com/search/repositories?q=v&sort=stars`
-    this.$http
-      .get(url)
-      .then(response => {
-        const result = response.data.items[0]
-        this.repUrl = result.html_url
-        this.repName = result.name
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
+  name: 'App'
 }
 </script>
-
 <style scoped>
-
 </style>

@@ -1,6 +1,8 @@
 import App from './App'
+import VueResource from 'vue-resource'
 import Vue from 'vue'
-import router from './router'
+
+Vue.use(VueResource)
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */
@@ -9,7 +11,5 @@ new Vue({
   components: {
     App
   },
-  template: `<App/>`,
-  // 注册路由器
-  router
+  template: `<App/>`
 })
