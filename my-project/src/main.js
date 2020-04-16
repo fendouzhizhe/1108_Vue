@@ -1,22 +1,18 @@
-// 引入Vue
+//引入Vue
 import Vue from 'vue'
-// 引入App组件
-import App from './App.vue'
-// 引入store
-import store from './store'
-// 设置提示信息是否显示
+//引入APP
+import App from './App'
+//引入路由
+import router from './router'
+
+//提示信息是否显示
 Vue.config.productionTip = false
-// 实例化Vue对象
-/* eslint-disable no-new */
+
 new Vue({
-  // 获取
+  //获取id
   el: '#app',
-  // 注册组件
-  components: {
-    App
-  },
-  // 使用模版
+  components: {App},
   template: '<App/>',
-  // 注册仓库
-  store
+  //注册路由
+  router
 })
