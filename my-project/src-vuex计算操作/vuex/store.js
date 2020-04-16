@@ -10,12 +10,12 @@ const state = {
 }
 // 直接修改状态数据
 const mutations = {
-
-  increment (state) { // 加的操作
+  // 加的操作
+  increment (state) {
     state.count++
   },
-
-  deincrement (state) { // 减的操作
+  // 减的操作
+  deincrement (state) {
     state.count--
   }
 }
