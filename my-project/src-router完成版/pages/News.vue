@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <h2>Home</h2>
-  </div>
+  <ul>
+    <li>news001</li>
+    <li>news002</li>
+    <li>news003</li>
+  </ul>
 </template>
 <script>
 export default {
-  name: 'Home'
 }
 </script>
 <style scoped>
