@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="./02-EvBus.js"></script>
+  <script type="text/javascript">
+  // 绑定事件
+  EvBus.on('aaa', function (list) {
+      console.log('aaa1', list)
+    })
+    EvBus.on('bbb', function (list) {
+      console.log('bbb2', list)
+    })
+    
+
+    // 解绑事件
+    EvBus.off()
+    // 分发事件
+    EvBus.emit('aaa', '666')
+    EvBus.emit('bbb', '999')
+  </script>
+</body>
+</html>
