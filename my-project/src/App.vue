@@ -1,46 +1,46 @@
 <template>
   <div>
-    <h2>点击次数:{{count}},奇数or偶数:{{evenOrOdd}}</h2>
+    <h2>点击次数:{{$store.state.count}},奇数or偶数:{{$store.getters.evenOrOdd}}</h2>
     <button @click="increment">increment</button>
-    <button @click="decrement">decrement</button>
+    <button @click="deincrement">deincrement</button>
     <button @click="incrementIfOdd">incrementIfOdd</button>
     <button @click="incrementAsync">incrementAsync</button>
   </div>
 </template>
 <script>
-
-// 点击按钮修改状态数据
+// 此案例在用不同的方式改变数据的状态
 export default {
-  data() {
-    return {
-      count: 0
-    }
-  },
-  computed: {
-    evenOrOdd() {
-      return this.count % 2 === 0 ? '偶数' : '奇数'
-    }
+  name: 'App',
+  // data() {
+  //   return {
+  //     count: 0 // 状态数据
+  //   }
+  // },
+  // computed: {
+  //   // get的操作
+  //   evenOrOdd() {
+  //     return this.count % 2 === 0 ? '偶数' : '奇数'
+  //   }
+  // },
+  mounted () {
+    console.log(this)
   },
   methods: {
     // 加的操作
     increment() {
-      this.count++
+      this.$store.commit('INCREMENT')
     },
     // 减的操作
-    decrement() {
-      this.count--
+    deincrement() {
+      this.$store.commit('DECREMENT')
     },
-    // 奇数的才加1
+    // 奇数的时候做加的操作
     incrementIfOdd() {
-      if (this.count % 2 !== 0) {
-        this.count++
-      }
+      this.$store.dispatch('incrementIfOdd')
     },
-    // 异步的加
+    // 异步的加法操作
     incrementAsync() {
-      setTimeout(() => {
-        this.count++
-      }, 1000)
+     this.$store.dispatch('incrementAsync')
     }
   }
 }
