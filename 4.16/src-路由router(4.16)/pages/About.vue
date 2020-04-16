@@ -1,12 +1,13 @@
 <template>
   <div>
     <h2>About</h2>
-    <input type="text" v-model="xyz">
+    <input type="text" v-model="abc">
   </div>
 </template>
 <script>
 export default {
-  props: ['xyz']
+  name: 'About',
+  props: ['abc']
 }
 </script>
 <style scoped>
