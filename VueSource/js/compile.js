@@ -10,7 +10,7 @@ function Compile (el, vm) {
         this.$fragment = this.node2Fragment(this.$el);
         // 模版初始化的操作
         this.init();
-        // 把文档碎片对象重新放在div这容器中
+        // 把文档碎片对象重新放在div容器中
         this.$el.appendChild(this.$fragment);
     }
 }
@@ -18,7 +18,7 @@ function Compile (el, vm) {
 Compile.prototype = {
     constructor: Compile,
     node2Fragment: function (el) { // el---div
-        // 首先创建文档碎片对象
+        // 创建文档碎片
         var fragment = document.createDocumentFragment(),
             child;
 
