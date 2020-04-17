@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+  <div id="demo">
+    <p>测试1</p>
+    <p>测试1</p>
+    <p>测试1</p>
+    <p>测试1</p>
+  </div>
+  <hr>
+  <script type="text/javascript">
+    // 伪数组,看起来是数组，可以遍历,但是不能调用真数组中的相关方法
+    // 1. 伪数组如何转成 真数组
+    const list1 = document.getElementsByTagName('p')
+    const list2 = [...list1]
+    const list3 = Array.from(list1)
+    const list4 = Array.prototype.slice.call(list1)
+    const list5 = [].slice.call(list1)
+    console.log(list1 instanceof Array)
+    console.log(list2 instanceof Array)
+    console.log(list3 instanceof Array)
+    console.log(list4 instanceof Array)
+    console.log(list5 instanceof Array)
+    // 2.nodeType DOM节点类型问题 ,是一个属性,通过对象来调用,获取当前的这个对象的类型(节点的类型)
+    // 节点:页面中所有的东西,标签:可以叫元素 
+    // 节点是有类型: 标签节点,属性节点,文本节点
+    const eleNode = document.getElementById('demo')
+    const attrNode = eleNode.getAttributeNode('id')
+    const txtNode = eleNode.firstChild
+    console.log(eleNode.nodeType) // 1 标签节点
+    console.log(attrNode.nodeType) // 2 属性节点
+    console.log(txtNode.nodeType) // 3 文本节点
+    // if(eleNode.nodeType===1){
+    //   console.log('标签节点')
+    // }
+
+    // 3. Object.definePrototype()方法
+    const person = {
+      firstName: '东方',
+      lastName: '不败'
+    }
+    Object.defineProperty(person, 'fullName', {
+      configurable: true, // 默认是false,不能被重新设置(比如:是否可以被删除)
+      enumerable: false, // 默认是false,是否可以被枚举
+      // value : '哈哈',
+      // writable:true , // 默认是false,是否可以被重写值
+      get() {
+        return this.firstName + '_' + this.lastName
+      },
+      set(val) {
+        const name = val.split('_')
+        this.firstName = name[0]
+        this.lastName = name[1]
+      }
+    })
+    // person.fullName='哈哈_哈'
+    console.log(person.fullName)
+
+    // 4. Object.keys()方法,当前的某个对象中能够被遍历的属性
+    const keys = Object.keys(person)
+    console.log(keys)
+    for (var key in person) {
+      console.log(key, person[key])
+    }
+
+    // 5. 对象.hasOwnProperty(prop) 方法,判断当前这个对象中是否包含这个属性(这个属性是这个对象自己的)
+    console.log(person.hasOwnProperty('fullName'))
+    console.log(person.hasOwnProperty('toString'))
+    console.log(person.toString())  // 继承过来的,可以用,但不是自己
+    console.dir(person)
+
+    // 6. 文档碎片对象模型---DocumentFragment (高效的批量更新多个节点)
+    // 需求,通过文档碎片对象,更新标签中的显示内容
+
+    // 1. 创建文档碎片对象
+    var fragment = document.createDocumentFragment()
+    // 2. 获取容器对象
+    var divObj = document.getElementById('demo')
+    // 3. 把容器对象中的节点全部的存放在文档碎片对象中
+    var child
+    while(child = divObj.firstChild){
+        // 相当于是剪切操作
+        fragment.appendChild(child)
+    }
+    // console.log('我好帅哦')
+    // 4. 遍历文档碎片对象中 所有的节点,进行内容更新操作
+    fragment.childNodes.forEach(node=>{
+      node.innerHTML='我才是最帅的,哈哈'
+    })
+    // 5. 把文档碎片对象放在容器中即可
+    divObj.appendChild(fragment)
+
+
+    // 相当于虚拟DOM操作
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // // 1. 伪数组
+    // const list1 = document.getElementsByTagName('p')
+    // const list2 = [...list1]
+    // const list3 = Array.from(list1)
+    // const list4 = Array.prototype.slice.call(list1)
+    // const list5 = [].slice.call(list1)
+    // console.log(list1 instanceof Array)
+    // console.log(list2 instanceof Array)
+    // console.log(list3 instanceof Array)
+    // console.log(list4 instanceof Array)
+    // console.log(list5 instanceof Array)
+    // // 2. nodeNodeTye:DOM节点类型
+    // const eleNode = document.getElementById('demo')
+    // const attrNode = eleNode.getAttributeNode('id')
+    // const txtNode = eleNode.firstChild
+    // console.log(eleNode.nodeType) // 标签
+    // console.log(attrNode.nodeType) // 属性
+    // console.log(txtNode.nodeType) // 文本
+    // // 3. Object.definePrototype()方法
+    // const person = {
+    //   firstName: '东方',
+    //   lastName: '不败'
+    // }
+    // Object.defineProperty(person, 'fullName', {
+    //   configurable: true,
+    //   enumerable: false,
+    //   // value:'哈-哈',
+    //   // writable:true,
+    //   get() {
+    //     return this.firstName + '-' + this.lastName
+    //   },
+    //   set(val) {
+    //     const name = val.split('-')
+    //     this.firstName = name[0]
+    //     this.lastName = name[1]
+    //   }
+    // })
+    // person.fullName = '诸葛-孔明'
+    // console.log(person.firstName, person.lastName)
+    // // 4. Object.keys()方法
+    // var keys = Object.keys(person)
+    // console.log(keys)
+    // for(var key in person){
+    //   console.log(key,person[key])
+    // }
+    // // 5. 对象.hasOwnProperty(prop)方法,当前对象中是否包含诸葛属性
+    // console.log(person.hasOwnProperty('fullName'))
+    // console.log(person.hasOwnProperty('toString'))
+    // // 6. DocumentFragment 文档碎片对象模型(高效批量更新多个节点)
+    // // 创建文档碎片对象模型
+    // var fragMent = document.createDocumentFragment()
+    // // 获取容器对象
+    // var divObj = document.getElementById('demo')
+    // // 把容器中的节点对象全部放在文档碎片对象中
+    // var child;
+    // while(child=divObj.firstChild){
+    //   fragMent.appendChild(child)
+    // }
+    // // 遍历文档碎片对象中所有的节点,进行替换操作
+    // fragMent.childNodes.forEach(node=>{
+    //   node.innerHTML='哈哈'
+    // })
+    // // 把文档碎片对象放在容器中
+    // divObj.appendChild(fragMent)
+  </script>
+
+</body>
+
+</html>
