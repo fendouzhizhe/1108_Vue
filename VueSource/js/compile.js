@@ -34,11 +34,12 @@ Compile.prototype = {
         // 编译元素的方法,并传入文档碎片对象
         this.compileElement(this.$fragment);
     },
-
+    //编译元素
     compileElement: function (el) {
         // el------文档碎片对象,把文档碎片对象中所有的节点获取到
         var childNodes = el.childNodes,
-            me = this; // 把this编译对象存放在me变量中
+        // 把this编译对象存放在me变量中
+            me = this; 
         // 把伪数组转成真数组(所有的节点)遍历,每个子节点都要进行遍历
         [].slice.call(childNodes).forEach(function (node) {
             // node---就是每个节点
@@ -240,7 +241,7 @@ var compileUtil = {
     }
 };
 
-
+//更新对象
 var updater = {
     // node----{{msg}}  value----'abc'
     textUpdater: function (node, value) {
