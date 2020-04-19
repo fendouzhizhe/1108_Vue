@@ -4,26 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <title>07_数据劫持-数据绑定</title>
-  <script src="../js/mvvm/mvvm.js"></script>
-  <script src="../js/mvvm/compile.js"></script>
-  <script src="../js/mvvm/observer.js"></script>
-  <script src="../js/mvvm/watcher.js"></script>
+  <script src="./js/mvvm.js"></script>
+  <script src="./js/compile.js"></script>
+  <script src="./js/observer.js"></script>
+  <script src="./js/watcher.js"></script>
 
 </head>
 
 <body>
   <div id="app">
-    <p>{{msg}}</p>
-    <p v-text="msg"></p>
+    <!-- <p>{{msg}}</p> -->
+    <!-- <p v-text="msg"></p> -->
   </div>
   <script type="text/javascript">
     const vm = new MVVM({
-      el: '#app',
-      data: {
-        msg: '<a href="http://www.baidu.com">百度</a>'
+      el:'#app',
+      data:{
+        // msg: '<a href="http://www.baidu.com">百度</a>'
+        msg:'哈哈',
+        age:10
       },
-    })
-         
+    })   
   </script>
 </body>
 

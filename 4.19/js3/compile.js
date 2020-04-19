@@ -1,148 +1,132 @@
-// 实现编译操作的构造函数,el--->#app,vm就是Vue的实例对象
+// 编译操作的函数
 function Compile (el, vm) {
     // 把vm实例对象存储到$vm属性中
     this.$vm = vm;
     // 根据#app选择器获取容器对象div,并存储到$el中
     this.$el = this.isElementNode(el) ? el : document.querySelector(el);
-    // 判断$el---div容器 是否存在
+    // 判断$el容器 是否存在
     if (this.$el) {
-        // 把当前的div容器中所有的节点全部的放在文档碎片对象中
+        // 把容器中节点全部的放在文档碎片中
         this.$fragment = this.node2Fragment(this.$el);
-        // 模版初始化的操作
+        // 初始化
         this.init();
         // 把文档碎片对象重新放在div容器中
         this.$el.appendChild(this.$fragment);
     }
 }
-// 编译对象的原型对象
+// 编译的原型对象
 Compile.prototype = {
+    //编译的构造器
     constructor: Compile,
-    node2Fragment: function (el) { // el---div
+    //文档节点的函数
+    node2Fragment: function (el) { 
         // 创建文档碎片
         var fragment = document.createDocumentFragment(),
             child;
 
-        // 通过循环遍历的方式,把div中所有的节点,一个一个的添加到文档碎片对象中
+        // 通过循环方式,把div中节点添加到文档碎片中
         while (child = el.firstChild) {
             fragment.appendChild(child);
         }
         // 返回文档碎片对象
         return fragment;
     },
-    // 初始化html模版操作
+    // 初始化
     init: function () {
-        // 编译元素的方法,并传入文档碎片对象
+        // 编译元素的方法
         this.compileElement(this.$fragment);
     },
     //编译元素
     compileElement: function (el) {
-        // el------文档碎片对象,把文档碎片对象中所有的节点获取到
+        // 获取文档碎片中所有的节点
         var childNodes = el.childNodes,
-        // 把this编译对象存放在me变量中
+        // 把编译对象放在me中
             me = this; 
-        // 把伪数组转成真数组(所有的节点)遍历,每个子节点都要进行遍历
+        // 遍历每个子节点
         [].slice.call(childNodes).forEach(function (node) {
-            // node---就是每个节点
-            // 获取节点的文本内容
+            // 获取节点的文本内容(node---就是每个节点)
             var text = node.textContent;
-            // 插值语法的对应的正则表达式-----{{msg}}---/\{\{(.*)\}\}/
+            // 插值语法的对应的正则表达式
             var reg = /\{\{(.*)\}\}/;
             // 判断当前的节点是不是标签节点
             if (me.isElementNode(node)) {
                 // 编译标签节点
                 me.compile(node);
 
-                // 当前的这个节点是不是文本节点,并且这个文本节点和上面的正则是否匹配
+                // 判断是不是文本节点,并且这个文本节点和正则是否匹配
             } else if (me.isTextNode(node) && reg.test(text)) {
-                // node---{{msg}}  RegExp.$1.trim()----msg表达式
+                // 编译文本节点
                 me.compileText(node, RegExp.$1.trim());
             }
-            // 当前的这个节点有没有子节点,并且子节点的个数大于0--------
+            // 判断是否有子节点
             if (node.childNodes && node.childNodes.length) {
-                // 递归操作,如果节点中还有子节点,就递归操作,继续遍历节点
+                // 如果节点中还有子节点,继续遍历节点
                 me.compileElement(node);
             }
         });
     },
 
-    // 如果当前的节点是标签的时候,就会进入这个方法
-    // node---标签节点----button按钮
+    //编译节点函数的方法
     compile: function (node) {
-        /// 获取button标签中所有的属性
-        //  <button v-on:click="showName">按钮</button>
-        // nodeAttrs----数组--->存储了按钮标签里所有的属性:v-on:click="showName"
+        //存储子节点的属性
         var nodeAttrs = node.attributes,
-            me = this; // this--->编译的实例对象存储到了me中
-        // nodeAttrs---伪数组,是不能直接调用数组中的forEach方法的,
+            // 编译的实例对象存储到了me中
+            me = this; 
         // 遍历所有的属性
         [].slice.call(nodeAttrs).forEach(function (attr) {
-            // attr--->v-on:click="showName"
-            // attrName--->v-on:click
             // 获取属性的名字
             var attrName = attr.name;
             // 判断当前的这个属性是不是一个指令
             if (me.isDirective(attrName)) {
-                // 获取这个属性的值---showName
-                // exp---表达式---->这个表达式中是showName 
+                // 获取这个属性的值
                 var exp = attr.value;
-                // dir---指令--->dir中存储的是,attrName---->v-on:click
-                // dir--->on:click
+                //把索引为2的属性名字取出来放在dir中
                 var dir = attrName.substring(2);
                 // 判断当前的指令是不是一个事件指令
-                // exp----->showName
-                // dir----->on:click
                 if (me.isEventDirective(dir)) {
-                    // 代码能够执行到这里,说明,此时dir就是一个事件指令
-                    // node---当前的节点---button按钮
-                    // me.$vm---->vm对象
-                    // exp----showName
-                    // dir---->on:click
+                    // dir就是一个事件指令
                     // 为标签节点,绑定对应的事件,并让事件指向对应的回调函数
                     compileUtil.eventHandler(node, me.$vm, exp, dir);
-                    // 普通指令
                 } else {
                     // 普通指令
-                    // dir---->text
-                    // compileUtil['text'](p,vm,'content')
                     compileUtil[dir] && compileUtil[dir](node, me.$vm, exp);
                 }
-                // 把按钮上原来的属性和值直接删除,并且标签上也干净了
+                // 把原来的属性和值直接删除
                 node.removeAttribute(attrName);
             }
         });
     },
-    // 编译插值---node---{{msg}}  exp---msg
+    // 编译插值
     compileText: function (node, exp) {
-        // 调用编译工具方法,把{{msg}}和vm实例对象,还有msg一起传进去
+        // 调用编译工具方法,把属性值和vm实例对象传进去
         compileUtil.text(node, this.$vm, exp);
     },
-    // 判断当前的属性是不是一个指令
-    // attr:   v-on:click
+    // 判断属性是不是一个指令
     isDirective: function (attr) {
-        // 如果字符串是以v-开头的,那么返回true,就意味着当前的这个属性是一个指令属性
+        // 如果以v-开头的,就返回true,说明属性是一个指令属性
         return attr.indexOf('v-') == 0;
     },
     // 判断当前的指令是不是一个事件指令
     isEventDirective: function (dir) {
-        // dir---->on:click
+        //以on开头的返回0
         return dir.indexOf('on') === 0;
     },
-    // 是一个方法,判断当前的节点是不是标签节点
+    // 判断是不是标签节点
     isElementNode: function (node) {
+        //是的话返回true   否则返回false
         return node.nodeType == 1;
     },
-    // 是一个方法,判断当前的节点是不是文本节点
+    // 判断是不是文本节点
     isTextNode: function (node) {
+        //是的话返回true   否则返回false
         return node.nodeType == 3;
     }
 };
 
 // 指令处理集合
 var compileUtil = {
-    //  node---{{msg}}   vm实例对象   exp-----msg
     // v-text
     text: function (node, vm, exp) {
-        // bind方法----node--->{{msg}},vm,exp--->msg,'text'
         this.bind(node, vm, exp, 'text');
     },
     // v-html
@@ -165,22 +149,15 @@ var compileUtil = {
             val = newValue;
         });
     },
-    // v-class 指令进来
+    // v-class
     class: function (node, vm, exp) {
         this.bind(node, vm, exp, 'class');
     },
-    // 绑定的方法 node---{{msg}},vm实例对象,exp---msg ,dir---'text'
+    //v-bind
     bind: function (node, vm, exp, dir) {
-        // 获取updater['textUpdater']
-        // updaterFn----->updater.textUpdater方法
-        // updater--->对象
+        // 获取updater
         var updaterFn = updater[dir + 'Updater'];
-        // updater.textUpdater方法是否存在,并调用
-        // updater.textUpdater({{msg}},this._getVMVal(vm, 'msg'))
-        // updater.textUpdater('{{msg}}','abc')
-
-        
-        //  根据vm对象找性的值---->cls
+        //  根据vm对象找性的值
         updaterFn && updaterFn(node, this._getVMVal(vm, exp));
 
         // 监视对象
@@ -190,32 +167,25 @@ var compileUtil = {
     },
 
     // 事件处理
-    // node---当前的节点---button按钮,me.$vm---->vm对象,exp----showName,dir---->on:click 
     eventHandler: function (node, vm, exp, dir) {
-        // 把on:click 中的 : 干掉了,并且要click存储到eventType中
+        // 获取dir中索引为1的值
         var eventType = dir.split(':')[1],
-        // vm中的methods对象是否存在,并且,vm.methods['showName']--->showName函数拿出来了
-        // fn---->showName函数
+            // vm中的methods对象是否存在
             fn = vm.$options.methods && vm.$options.methods[exp];
-        // 判断click是否存在并且, showName函数是否存在
+        // 判断索引为1的值和fn这个函数是否存在
         if (eventType && fn) {
-            // node---button按钮,
-            // 为button绑定了clicke事件,并且该事件所指向的回调函数就是showName
+            // 绑定事件
             node.addEventListener(eventType, fn.bind(vm), false);
         }
     },
-    // vm----vm实例对象,exp----msg
+    //根据实例对象找属性的值
     _getVMVal: function (vm, exp) {
-        
-        // val--->vm对象
+        // 获取对象
         var val = vm;
         // msg表达式中的.切割掉,形成一个数组
-        // exp----['msg']
         exp = exp.split('.');
-        // 遍历数组--->k----->msg属性
+        // 遍历数组
         exp.forEach(function (k) {
-            // val= vm['msg']----->val=vm.msg的值
-            // val='abc'
             val = val[k];
         });
         // 返回属性的值
@@ -238,25 +208,23 @@ var compileUtil = {
 
 //更新对象
 var updater = {
-    // 插值语法文本替换，node----{{msg}}  value----'abc'
+    // 插值语法文本替换    v-text
     textUpdater: function (node, value) {
-        // textContent='abc'
-        // p.textContent=<a href="http://www.baidu.com">百度</a>
         node.textContent = typeof value == 'undefined' ? '' : value;
     },
-    // v-html这种指令最终会调用的方法
+    // v-html方法
     htmlUpdater: function (node, value) {
         node.innerHTML = typeof value == 'undefined' ? '' : value;
     },
-    // v-class这种指令最终调用的方法
+    // v-class方法
     classUpdater: function (node, value, oldValue) {
-        //获取节点的类样式名字
+        //获取节点的类名字
         var className = node.className;
-        //类样式名字换空格
+        //替换这个类名字
         className = className.replace(oldValue, '').replace(/\s$/, '');
-        //是否还有其他类样式的名字，如果没有，那么空格也没有
+        //如果是类样式的名字并且这个值有就是空格   没有就是空
         var space = className && String(value) ? ' ' : '';
-        //标签上有原来类样式的名字+空格+现在类样式的名字(如果前面类样式的名字是空的，那么最后得出来的结果就是value的值)
+        //现在该标签上有现在的类名字+空格+原来的类名字
         node.className = className + space + value;
     },
     //v-model指令
