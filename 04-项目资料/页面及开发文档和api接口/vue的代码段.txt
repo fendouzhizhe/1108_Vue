@@ -1,0 +1,21 @@
+"Print3 to console": {
+    "prefix": "vv2",
+    "body": [
+      "<template>",
+      "\t<div>",
+
+      "\t</div>",
+      "</template>",
+
+      "<script>",
+
+      "export default {",
+      "}",
+      "</script>",
+
+      "<style lang=\"less\" rel=\"stylesheet/less\" scoped>",
+
+      "</style>"
+    ],
+    "description": "Log output to console"
+  }
