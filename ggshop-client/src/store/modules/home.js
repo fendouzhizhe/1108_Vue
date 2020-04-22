@@ -8,7 +8,7 @@ const state={
 const mutations={
   //直接修改三级分类数据
   RECEIVE_BASE_CATEGORY_LIST(state,baseCategoryList){
-    state.baseCategoryList=baseCategoryList
+    state.baseCategoryList=baseCategoryList.splice(0,baseCategoryList.length-1)
   },
 }
 const actions={

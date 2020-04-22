@@ -11,7 +11,7 @@ import Header from './components/Header'
 // 引入Footer
 import Footer from './components/Footer'
 // 引入api
-import {reqBaseCategoryList} from './api'
+// import {reqBaseCategoryList} from './api'
 
 export default {
   name: 'App',
@@ -20,8 +20,8 @@ export default {
     Header,
     Footer
   },
-  async mounted () {
-    const result=await reqBaseCategoryList()
+  mounted () {
+    // const result=await reqBaseCategoryList()
     // console.log(result);
     
 
