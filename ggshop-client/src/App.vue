@@ -21,6 +21,10 @@ export default {
     Footer
   },
   mounted () {
+    //提交对应的action
+    this.$store.dispatch(
+      "getBaseCategoryList"
+    );
     // const result=await reqBaseCategoryList()
     // console.log(result);
     

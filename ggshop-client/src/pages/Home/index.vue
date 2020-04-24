@@ -44,7 +44,7 @@ import components from './homeModules'
 export default {
   name: 'Home',
   //注册组件
-  components
+  components,
   // components: {
   //     ListContainer,
   //     TodayRecomment,
@@ -53,6 +53,11 @@ export default {
   //     Floor,
   //     Brand
   // }
+
+  mounted(){
+    this.$store.dispatch('getBanners')
+    this.$store.dispatch('getFloors')
+  }
 }
 </script>
 <style lang="less" rel="stylesheet/less" scoped>

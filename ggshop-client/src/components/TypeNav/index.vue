@@ -160,10 +160,10 @@ export default {
   },
   //页面加载后
   mounted() {
-    //获取三级分类数据
-    this.$store.dispatch(
-      "getBaseCategoryList"
-    );
+    //获取三级分类数据(由于优化，所以干掉这个代码)
+    // this.$store.dispatch(
+    //   "getBaseCategoryList"
+    // );
     //判断当前路径是不是/
     if (
       this.$route.path !== "/"

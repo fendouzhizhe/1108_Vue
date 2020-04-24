@@ -6,6 +6,8 @@ import App from './App.vue'
 import router from './router'
 //引入vuex中的store
 import store from './store'
+//引入mock
+import './mock/mockServer'
 
 //引入商品分类导航组件
 import TypeNav from './components/TypeNav'

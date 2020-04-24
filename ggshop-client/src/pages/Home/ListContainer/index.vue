@@ -4,10 +4,8 @@
       class="sortList clearfix"
     >
       <div class="center">
-        <!--banner轮播-->
         <div
           class="swiper-container"
-          id="mySwiper"
         >
           <div
             class="swiper-wrapper"
@@ -15,19 +13,24 @@
             <div
               class="swiper-slide"
             >
-              <img
-                src="./images/home/banner3.jpg"
-              />
+              <img src="./images/home/banner1.jpg" alt="">
             </div>
-            <!-- <div class="swiper-slide">
-                                <img src="./images/home/banner2.jpg" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./images/home/banner3.jpg" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./images/home/banner4.jpg" />
-                            </div> -->
+            <div
+              class="swiper-slide"
+            >
+              <img src="./images/home/banner2.jpg" alt="">
+            </div>
+            <div
+              class="swiper-slide"
+            >
+              <img src="./images/home/banner3.jpg" alt="">
+            </div>
+            <div
+              class="swiper-slide"
+            >
+              <img src="./images/home/banner4.jpg" alt="">
+            </div>
+            
           </div>
           <!-- 如果需要分页器 -->
           <div
@@ -40,6 +43,11 @@
           ></div>
           <div
             class="swiper-button-next"
+          ></div>
+
+          <!-- 如果需要滚动条 -->
+          <div
+            class="swiper-scrollbar"
           ></div>
         </div>
       </div>
@@ -243,8 +251,32 @@
   </div>
 </template>
 <script>
+import Swiper from "swiper";
+import "swiper/css/swiper.css";
+
 export default {
   name: "ListContainer",
+  mounted () {
+    var mySwiper = new Swiper ('.swiper-container', {
+      loop: true, // 循环模式选项
+      
+      // 如果需要分页器
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      
+      // 如果需要前进后退按钮
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      
+      // 如果需要滚动条
+      scrollbar: {
+        el: '.swiper-scrollbar',
+      },
+    }) 
+  }
 };
 </script>
 <style
