@@ -1,55 +1,9 @@
 <template>
   <div class="list-container">
-    <div
-      class="sortList clearfix"
-    >
+    <div class="sortList clearfix">
       <div class="center">
-        <div
-          class="swiper-container"
-        >
-          <div
-            class="swiper-wrapper"
-          >
-            <div
-              class="swiper-slide"
-            >
-              <img src="./images/home/banner1.jpg" alt="">
-            </div>
-            <div
-              class="swiper-slide"
-            >
-              <img src="./images/home/banner2.jpg" alt="">
-            </div>
-            <div
-              class="swiper-slide"
-            >
-              <img src="./images/home/banner3.jpg" alt="">
-            </div>
-            <div
-              class="swiper-slide"
-            >
-              <img src="./images/home/banner4.jpg" alt="">
-            </div>
-            
-          </div>
-          <!-- 如果需要分页器 -->
-          <div
-            class="swiper-pagination"
-          ></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div
-            class="swiper-button-prev"
-          ></div>
-          <div
-            class="swiper-button-next"
-          ></div>
-
-          <!-- 如果需要滚动条 -->
-          <div
-            class="swiper-scrollbar"
-          ></div>
-        </div>
+        <!-- 轮播图 -->
+        <Carousel :carouselList="banners" />
       </div>
       <div class="right">
         <div class="news">
@@ -251,31 +205,59 @@
   </div>
 </template>
 <script>
-import Swiper from "swiper";
-import "swiper/css/swiper.css";
+//引入Swiper
+// import Swiper from "swiper";
+// import "swiper/css/swiper.css";
+
+import {mapState} from 'vuex'
 
 export default {
   name: "ListContainer",
+  computed:{
+    ...mapState({
+      banners:state=>state.home.banners
+    })
+  },
   mounted () {
-    var mySwiper = new Swiper ('.swiper-container', {
-      loop: true, // 循环模式选项
-      
-      // 如果需要分页器
-      pagination: {
-        el: '.swiper-pagination',
-      },
-      
-      // 如果需要前进后退按钮
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      
-      // 如果需要滚动条
-      scrollbar: {
-        el: '.swiper-scrollbar',
-      },
-    }) 
+     
+    // setTimeout(()=>{
+    //   var mySwiper = new Swiper (this.$refs.sw, {
+    //     loop: true, // 循环模式选项
+    //     autoplay:true,
+        
+    //     // 如果需要分页器
+    //     pagination: {
+    //       el: '.swiper-pagination',
+    //     },
+        
+    //     // 如果需要前进后退按钮
+    //     navigation: {
+    //       nextEl: '.swiper-button-next',
+    //       prevEl: '.swiper-button-prev',
+    //     },
+    //   })
+    // },1000)
+  },
+  watch:{
+    // banners(){
+    //   this.$nextTick(()=>{
+    //     var mySwiper = new Swiper (this.$refs.sw, {
+    //       loop: true, // 循环模式选项
+    //       autoplay:true,
+          
+    //       // 如果需要分页器
+    //       pagination: {
+    //         el: '.swiper-pagination',
+    //       },
+          
+    //       // 如果需要前进后退按钮
+    //       navigation: {
+    //         nextEl: '.swiper-button-next',
+    //         prevEl: '.swiper-button-prev',
+    //       },
+    //     })
+    //   })
+    // }
   }
 };
 </script>

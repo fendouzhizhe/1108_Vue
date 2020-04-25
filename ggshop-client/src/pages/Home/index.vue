@@ -16,10 +16,10 @@
         <Like/>
 
         <!--楼层-->
-        <Floor/>
+        <Floor v-for="floor in floors" :key="floor.id" :floor="floor" />
 
         <!--楼层-->
-        <Floor/>
+        <!-- <Floor/> -->
 
         <!--商标-->
         <Brand/>
@@ -40,6 +40,8 @@
 // import Brand from './Brand'
 
 import components from './homeModules'
+//引入vuex的辅助函数
+import {mapState} from 'vuex'
 
 export default {
   name: 'Home',
@@ -55,8 +57,16 @@ export default {
   // }
 
   mounted(){
+    //获取大轮播图数据
     this.$store.dispatch('getBanners')
+    //获取楼层数据
     this.$store.dispatch('getFloors')
+  },
+  computed: {
+    //获取楼层的数据
+    ...mapState({
+      floors:state=>state.home.floors
+    })
   }
 }
 </script>
