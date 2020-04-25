@@ -28,9 +28,9 @@ export default {
     
   },
   watch:{
-    carouselList:{
+    carouselList: {
       handler(){
-        if(this.carouselList.length===0)return
+        if(this.carouselList.length===0) return
         this.$nextTick(()=>{
           var mySwiper = new Swiper (this.$refs.sw, {
             loop: true, // 循环模式选项
