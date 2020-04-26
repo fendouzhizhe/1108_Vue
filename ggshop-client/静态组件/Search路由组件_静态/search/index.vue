@@ -326,17 +326,13 @@
   </div>
 </template>
 
-<script>  
-  //引入搜索组件
+<script>
   import SearchSelector from './SearchSelector/SearchSelector'
   export default {
     name: 'Search',
-    //注册组件
+
     components: {
       SearchSelector
-    },
-    mounted(){
-      this.$store.dispatch('getProductList',{})
     }
   }
 </script>

@@ -25,4 +25,5 @@ export const reqBanners = () =>
 export const reqFloors = () =>
   mockAjax.get("/floors");
 
-
+//获取搜索数据的接口
+export const reqProductList=(searchParams)=>ajax.post('/list',searchParams)
