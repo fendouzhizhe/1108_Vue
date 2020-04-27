@@ -31,7 +31,7 @@
                     index,
                 }"
                 @mouseenter="
-                  shouSubCategorys(
+                  showSubCategorys(
                     index
                   )
                 "
