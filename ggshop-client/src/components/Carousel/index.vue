@@ -1,8 +1,9 @@
 <template>
   <div class="swiper-container" id="sw1" ref="sw">
     <div class="swiper-wrapper">
-      <div class="swiper-slide" v-for="carouse in carouselList" :key="carouse.id">
-        <img :src="carouse.imgUrl" alt="">
+      <div class="swiper-slide" v-for="carouse in carouselList" 
+      :key="carouse.id">
+        <img :src="carouse.imgUrl" alt />
       </div>          
     </div>
     <!-- 如果需要分页器 -->
@@ -22,19 +23,19 @@ import Swiper from "swiper";
 export default {
   name: 'Carousel',
   props:{
-    carouselList:Array
+    carouselList: Array
   },
-  mounted:{
+  mounted(){
     
   },
   watch:{
-    carouselList: {
+    carouselList:{
       handler(){
         if(this.carouselList.length===0) return
-        this.$nextTick(()=>{
-          var mySwiper = new Swiper (this.$refs.sw, {
+        this.$nextTick(() => {
+          var mySwiper = new Swiper(this.$refs.sw, {
             loop: true, // 循环模式选项
-            autoplay:true,
+            // autoplay:true,
             
             // 如果需要分页器
             pagination: {

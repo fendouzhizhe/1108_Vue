@@ -39,6 +39,6 @@ export default [
   //重定向路由
   {
     path:'/',
-    redirect:'/home'
+    redirect:'/'
   }
 ]

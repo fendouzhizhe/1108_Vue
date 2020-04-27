@@ -4,7 +4,8 @@
       <div class="fl key brand">品牌</div>
       <div class="value logos">
         <ul class="logo-list">
-          <li v-for="trademark in trademarkList" :key="trademark.tmId">{{trademark.tmName}}</li>
+          <li v-for="trademark in trademarkList" 
+          :key="trademark.tmId">{{trademark.tmName}}</li>
         </ul>
       </div>
       <div class="ext">
@@ -12,7 +13,8 @@
         <a href="javascript:void(0);">更多</a>
       </div>
     </div>
-    <div class="type-wrap" v-for="attrs in attrsList" :key="attrs.attrId">
+    <div class="type-wrap" v-for="attrs in attrsList" 
+    :key="attrs.attrId">
       <div class="fl key">{{attrs.attrName}}</div>
       <div class="fl value">
         <ul class="type-list">
@@ -28,11 +30,11 @@
 
 <script>
   //引入vuex中的辅助函数
-  import {mapGetters} from 'vuex'
+  import { mapGetters } from 'vuex'
   export default {
     name: 'SearchSelector',
     computed:{
-      ...mapGetters(['trademarkList','attrsList'])
+      ...mapGetters(['trademarkList', 'attrsList'])
     }
   }
 </script>

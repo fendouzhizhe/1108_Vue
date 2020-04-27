@@ -59,8 +59,7 @@
                   >
                     <dl
                       class="fore"
-                      v-for="(c2,
-                      index) in c1.categoryChild"
+                      v-for="c2 in c1.categoryChild"
                       :key="
                         c2.categoryId
                       "
@@ -82,8 +81,7 @@
                       </dt>
                       <dd>
                         <em
-                          v-for="(c3,
-                          index) in c2.categoryChild"
+                          v-for="c3 in c2.categoryChild"
                           :key="
                             c3.categoryId
                           "
@@ -179,7 +177,7 @@ export default {
     //   this.currentIndex=index
     // },300)
 
-    shouSubCategorys: throttle(
+    showSubCategorys: throttle(
       function(index) {
         this.currentIndex = index;
         // console.log(index);
@@ -198,31 +196,44 @@ export default {
           category1id,
           category2id,
           category3id,
-        } = event.target.dataset;
+        } = event.target.dataset
         //准备参数
         const query = {
           categoryName: categoryname,
         };
-
+        //判断对应的参数中是否有数据
         if (category1id) {
-          query.category1Id = category1id;
+          query.category1Id = category1id
         } else if (
           category2id
         ) {
-          query.category2Id = category2id;
+          query.category2Id = category2id
         } else if (
           category3id
         ) {
-          query.category3Id = category3id;
+          query.category3Id = category3id
         }
 
         //const id=category1id?'1':(category2id?'2':(category3id?'3':''))
         //query['category'+id+'Id']=category1id||category2id||category3id
 
-        this.$router.push({
-          path: "/search",
-          query,
-        });
+        //获取路由地址
+        const { path, params} = this.$route
+        if(path.indexOf('/search')===0){
+          //在search页面跳转
+          this.$router.replace({ path, query, params})
+        }else{
+          //不在search页面跳转
+          this.$router.push({
+            path: '/search',
+            query,
+          })
+        }
+        //重置当前的索引
+        this.currentIndex=-2
+        this.isShowFirst=false
+
+        
 
         //跳转操作
         // this.$router.push({path:'/search'})
@@ -241,7 +252,7 @@ export default {
       }
     }
   },
-};
+}
 </script>
 <style
   lang="less"
