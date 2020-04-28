@@ -6,6 +6,8 @@ import Register from '@/pages/Register'
 import Login from '@/pages/Login'
 //引入搜索组件
 import Search from '@/pages/Search'
+//引入Detail
+import Detail from '@/pages/Detail'
 
 
 export default [
@@ -35,6 +37,12 @@ export default [
     name:'search',
     path:'/search/:keyword?', 
     component:Search
+  },
+  //Detail路由
+  {
+    name:'Detail',
+    path:'/Detail/:skuId', 
+    component:Detail
   },
   //重定向路由
   {

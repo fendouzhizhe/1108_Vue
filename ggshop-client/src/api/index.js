@@ -27,3 +27,7 @@ export const reqFloors = () =>
 
 //获取搜索数据的接口
 export const reqProductList=(searchParams)=>ajax.post('/list',searchParams)
+
+
+// 获取商品详情的接口
+export const reqDetailInfo = (skuId)=>ajax.get(`/item/${skuId}`)
