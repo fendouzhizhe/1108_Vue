@@ -2,318 +2,144 @@
   <div>
     <TypeNav />
     <div class="main">
-      <div
-        class="py-container"
-      >
+      <div class="py-container">
         <!--bread-->
         <div class="bread">
-          <ul
-            class="fl sui-breadcrumb"
-          >
+          <ul class="fl sui-breadcrumb">
             <li>
-              <a href="#"
-                >全部结果</a
-              >
+              <a href="#">全部结果</a>
             </li>
           </ul>
-          <ul
-            class="fl sui-tag"
-          >
+          <ul class="fl sui-tag">
             <!--分类信息的名字的显示-->
-            <li
-              class="with-x"
-              v-if="
-                options.categoryName
-              "
-            >
-              {{
-                options.categoryName
-              }}
-              <i
-                @click="
-                  removeCategory
-                "
-                >×</i
-              >
+            <li class="with-x" v-if="options.categoryName">
+              {{options.categoryName}}
+              <i @click="removeCategory">×</i>
             </li>
             <!--关键字的内容的显示-->
-            <li
-              class="with-x"
-              v-if="
-                options.keyword
-              "
-            >
-              {{
-                options.keyword
-              }}
-              <i
-                @click="
-                  removeKeyword
-                "
-                >×</i
-              >
+            <li class="with-x" v-if="options.keyword">
+              {{options.keyword}}
+              <i @click="removeKeyword">×</i>
             </li>
-            <!-- 品牌信息 -->
-            <li
-              class="with-x"
-              v-if="
-                options.trademark
-              "
-            >
-              {{
-                options.trademark
-              }}
-              <i
-                @click="
-                  removeTrademark
-                "
-                >×</i
-              >
+            <!--品牌信息的显示-->
+            <li class="with-x" v-if="options.trademark">
+              {{options.trademark}}
+              <i @click="removeTrademark">×</i>
             </li>
-            <!-- 搜索属性条件 -->
-            <li
-              class="with-x"
-              v-for="(prop,
-              index) in options.props"
-              :key="prop"
-            >
-              {{ prop }}
-              <i
-                @click="
-                  removeProp(
-                    index
-                  )
-                "
-                >×</i
-              >
+            <!--搜索属性条件的显示-->
+            <li class="with-x" v-for="(prop,index) in options.props" :key="prop">
+              {{prop}}
+              <i @click="removeProp(index)">×</i>
             </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector
-          :setTrademark="
-            setTrademark
-          "
-          :addProps="addProps"
-        />
+        <SearchSelector :setTrademark="setTrademark" :addProps="addProps" />
 
         <!--details-->
-        <div
-          class="details clearfix"
-        >
-          <div
-            class="sui-navbar"
-          >
-            <div
-              class="navbar-inner filter"
-            >
-              <ul
-                class="sui-nav"
-              >
-                <li
-                  :class="{
-                    active: isActive(
-                      '1'
-                    ),
-                  }"
-                  @click="
-                    setOrder(
-                      '1'
-                    )
-                  "
-                >
-                  <a
-                    href="javascript:;"
-                    >综合</a
-                  >
+        <div class="details clearfix">
+          <div class="sui-navbar">
+            <div class="navbar-inner filter">
+              <ul class="sui-nav">
+                <li :class="{active:isActive('1')}" @click="setOrder('1')">
+                  <a href="javascript:;">综合{{getOrderIcon('1')}}</a>
                 </li>
                 <li>
-                  <a
-                    href="javascript:;"
-                    >销量</a
-                  >
+                  <a href="javascript:;">销量</a>
                 </li>
                 <li>
-                  <a
-                    href="javascript:;"
-                    >新品</a
-                  >
+                  <a href="javascript:;">新品</a>
                 </li>
                 <li>
-                  <a
-                    href="javascript:;"
-                    >评价</a
-                  >
+                  <a href="javascript:;">评价</a>
                 </li>
-                <li
-                  :class="{
-                    active: isActive(
-                      '2'
-                    ),
-                  }"
-                  @click="
-                    setOrder(
-                      '2'
-                    )
-                  "
-                >
-                  <a
-                    href="javascript:;"
-                    >价格⬆</a
-                  >
+                <li :class="{active:isActive('2')}" @click="setOrder('2')">
+                  <a href="javascript:;">价格{{getOrderIcon('2')}}</a>
                 </li>
                 <!-- <li>
-                  <a href="#">价格⬇</a>
-                </li> -->
+                  <a href="#">价格⬇ ⬆</a>
+                </li>-->
               </ul>
             </div>
           </div>
-          <div
-            class="goods-list"
-          >
-            <ul
-              class="yui3-g"
-            >
-              <li
-                class="yui3-u-1-5"
-                v-for="good in goodsList"
-                :key="good.id"
-              >
-                <div
-                  class="list-wrap"
-                >
-                  <div
-                    class="p-img"
-                  >
-                    <a
-                      href="javascript:;"
-                    >
-                      <img
-                        :src="
-                          good.defaultImg
-                        "
-                      />
+          <div class="goods-list">
+            <ul class="yui3-g">
+              <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
+                <div class="list-wrap">
+                  <div class="p-img">
+                    <a href="javascript:;">
+                      <img :src="good.defaultImg" />
                     </a>
                   </div>
-                  <div
-                    class="price"
-                  >
+                  <div class="price">
                     <strong>
-                      <em
-                        >¥</em
-                      >
-                      <i>{{
-                        good.price
-                      }}</i>
+                      <em>¥</em>
+                      <i>{{good.price}}</i>
                     </strong>
                   </div>
-                  <div
-                    class="attr"
-                  >
-                    <a
-                      href="javascript:;"
-                      :title="
-                        good.title
-                      "
-                      >{{
-                        good.title
-                      }}</a
-                    >
+                  <div class="attr">
+                    <a href="javascript:;" :title="good.title">{{good.title}}</a>
                   </div>
-                  <div
-                    class="commit"
-                  >
-                    <i
-                      class="command"
-                    >
+                  <div class="commit">
+                    <i class="command">
                       已有
-                      <span
-                        >2000</span
-                      >人评价
+                      <span>2000</span>人评价
                     </i>
                   </div>
-                  <div
-                    class="operate"
-                  >
-                    <a
-                      href="javascript:;"
-                      class="sui-btn btn-bordered btn-danger"
-                      >加入购物车</a
-                    >
-                    <a
-                      href="javascript:void(0);"
-                      class="sui-btn btn-bordered"
-                      >收藏</a
-                    >
+                  <div class="operate">
+                    <a href="javascript:;" class="sui-btn btn-bordered btn-danger">加入购物车</a>
+                    <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                   </div>
                 </div>
               </li>
             </ul>
           </div>
-          <div
-            class="fr page"
-          >
-            <div
-              class="sui-pagination clearfix"
-            >
+          <!--分页结构标签-->
+          
+          <!-- <Pagination :pageConfig="{total:goodsList.length,showPageNo:3,pageNo:options.pageNo,pageSize:options.pageSize}" /> -->
+          <!--所有商品数据的总条数-->
+          <Pagination
+            :pageConfig="{total:productList.total,
+            showPageNo:3,
+            pageNo:options.pageNo,
+            pageSize:options.pageSize}"
+            @changeCurrentPage="changeCurrentPage"
+          />
+
+          <!-- <div class="fr page">
+            <div class="sui-pagination clearfix">
               <ul>
-                <li
-                  class="prev disabled"
-                >
-                  <a href="#"
-                    >«上一页</a
-                  >
+                <li class="prev disabled">
+                  <a href="#">«上一页</a>
                 </li>
-                <li
-                  class="active"
-                >
-                  <a href="#"
-                    >1</a
-                  >
+                <li class="active">
+                  <a href="#">1</a>
                 </li>
                 <li>
-                  <a href="#"
-                    >2</a
-                  >
+                  <a href="#">2</a>
                 </li>
                 <li>
-                  <a href="#"
-                    >3</a
-                  >
+                  <a href="#">3</a>
                 </li>
                 <li>
-                  <a href="#"
-                    >4</a
-                  >
+                  <a href="#">4</a>
                 </li>
                 <li>
-                  <a href="#"
-                    >5</a
-                  >
+                  <a href="#">5</a>
                 </li>
-                <li
-                  class="dotted"
-                >
-                  <span
-                    >...</span
-                  >
+                <li class="dotted">
+                  <span>...</span>
                 </li>
-                <li
-                  class="next"
-                >
-                  <a href="#"
-                    >下一页»</a
-                  >
+                <li class="next">
+                  <a href="#">下一页»</a>
                 </li>
               </ul>
               <div>
-                <span
-                  >共10页&nbsp;</span
-                >
+                <span>共10页&nbsp;</span>
               </div>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
@@ -336,24 +162,33 @@ export default {
   },
   // 计算属性
   computed: {
-    ...mapGetters([
-      "goodsList",
-    ]), // 获取商品信息
-    // 获取所有的商品信息对象============
+    ...mapGetters(["goodsList",]), // 获取商品信息
+    // 获取所有的商品信息对象
+    ...mapState({productList:state => state.search.productList})
   },
   data() {
     return {
       options: {
-        category1Id: "", // 一级分类的id
-        category2Id: "", // 二级分类的id
-        category3Id: "", // 三级分类的id
-        categoryName: "", // 分类的名字
-        trademark: "", // 品牌      值:  "品牌id:品牌名字"--->"4:小米"
-        order: "1:desc", // 排序方式  值: "1:asc" 1--综合,2--价格, asc--升序 desc--降序
-        pageNo: 1, // 当前第几页   数字值
-        pageSize: 5, // 每页多少条数据  数字值
-        keyword: "", // 搜索关键字    在搜索框中输入的内容
-        props: [], // 多个属性条件组成的数组, ["属性id:属性值:属性名字"]  "1:1700-2799:价格",
+        // 一级分类的id
+        category1Id: "", 
+        // 二级分类的id
+        category2Id: "", 
+        // 三级分类的id
+        category3Id: "", 
+        // 分类的名字
+        categoryName: "", 
+        // 品牌      值:  "品牌id:品牌名字"--->"4:小米"
+        // trademark: "", 
+        // 排序方式  值: "1:asc" 1--综合,2--价格, asc--升序 desc--降序
+        order: "1:desc", 
+        // 当前第几页   数字值
+        pageNo: 1, 
+        // 每页多少条数据  数字值
+        pageSize: 5, 
+        // 搜索关键字    在搜索框中输入的内容
+        keyword: "", 
+        // 多个属性条件组成的数组, ["属性id:属性值:属性名字"]  "1:1700-2799:价格",
+        props: [], 
       },
     };
   },
@@ -400,31 +235,24 @@ export default {
       });
     },
     //点击品牌的时候增加搜索条件
-    setTrademark(
-      trademarkId,
-      trademarkName
-    ) {
-      this.options.trademark =
-        trademarkId +
-        ":" +
-        trademarkName;
+    setTrademark(trademarkId,trademarkName) {
+      // this.options.trademark = trademarkId + ":" + trademarkName;
+      //发送请求
+      // this.getProductList();
+      this.$set(this.options,'trademark',trademarkId + ":" + trademarkName)
       //发送请求
       this.getProductList();
     },
     //移除
     removeTrademark() {
       //删除请求的接口参数
-      this.options.trademark =
-        "";
+      // this.options.trademark ="";
+      this.$delete(this.options,'trademark')
       //重新获取商品列表数据
       this.getProductList();
     },
     //用来点击属性条件
-    addProps(
-      propId,
-      propVal,
-      peopName
-    ) {
+    addProps(propId,propVal,peopName) {
       const prop = `${propId}:${propVal}:${peopName}`;
       //判断属性是否在数组中
       if (
@@ -450,14 +278,45 @@ export default {
     },
     //排序操作
     isActive(flag) {
-      return (
-        this.options.order.indexOf(
-          flag
-        ) === 0
-      );
+      return (this.options.order.indexOf(flag) === 0);
     },
     //进行排序操作
-    setOrder(flag) {},
+    setOrder(flag) {
+      //干掉属性值的空格
+      // const orders=this.options.order.aplit(':')
+      // const orderFlag=orders[0]
+      // const orderType=orders[1]
+      let [orderFlag,orderType]=this.options.order.split(':')
+      //判断标识是否一致
+      if(flag===orderFlag){
+        //同一个排序的内容
+        orderType=orderType==='desc'?'asc':'desc'
+      }else{
+        //选的不一样
+        orderFlag=flag
+        orderType='desc'
+      }
+      //重新更新对应的参数
+      this.options.order=`${orderFlag}:${orderType}`
+      //发送请求
+      this.getProductList()
+    },
+    getOrderIcon(flag){
+      //获取当前的参数标识及类型
+      let [orderFlag,orderType]=this.options.order.split(':')
+      if(orderFlag===flag){
+        return orderType==='desc'?'⬇':'⬆'
+      }else{
+        return ''
+      }
+    },
+    // 绑定事件,改变当前页面,发送请求获取该页数的数
+    changeCurrentPage(page){
+      // 改变发送请求的时候传入的参数数据
+      this.options.pageNo=page
+      // 发送请求
+      this.getProductList() 
+    }
   },
   // 页面加载后的生命周期回调
   mounted() {

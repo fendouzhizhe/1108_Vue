@@ -13,6 +13,14 @@ const mutations={
 }
 const actions={
   async getProductList({commit},searchParams){
+    //如果不改变组件中的options
+    searchParams={...searchParams}
+    //过滤searchParams空字符串
+    Object.keys(searchParams).forEach(key=>{
+      if(searchParams[key]===''){
+        delete searchParams[key]
+      }
+    })
     //发送异步请求
     const result=await reqProductList(searchParams)
     if(result.code===200){

@@ -17,10 +17,14 @@ import TypeNav from './components/TypeNav'
 //引入轮播图组件
 import Carousel from './components/Carousel'
 
+//引入分页组件
+import Pagination from './components/Pagination'
+
 Vue.config.productionTip = false
 //注册全局组件
 Vue.component('TypeNav',TypeNav)
 Vue.component('Carousel',Carousel)
+Vue.component('Pagination',Pagination)
 
 // Vue.prototype.$bus=new Vue()
 
