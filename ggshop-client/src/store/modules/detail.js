@@ -22,19 +22,23 @@ const actions = {
 const getters = {
   // 返回三级分类
   categoryView(state){
-
+    const categoryView=state.detailInfo.categoryView
+    return categoryView?categoryView:{}
   },
   // 返回商品sku
   skuInfo(state){
-
+    const skuInfo=state.detailInfo.skuInfo
+    return skuInfo?skuInfo:{}
   },
   // 返回商品的轮播图
   skuImageList(state){
-
+    const skuInfo=state.detailInfo.skuInfo
+    return skuInfo?skuInfo.skuImageList:[]
   },
   // 返回商品SPU
   spuSaleAttrList(state){
-    
+    const spuSaleAttrList=state.detailInfo.spuSaleAttrList
+    return spuSaleAttrList?spuSaleAttrList:[]
   },
 }
 

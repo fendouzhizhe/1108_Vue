@@ -1,17 +1,66 @@
 <template>
   <div class="spec-preview">
-    <img src="../images/s1.png" />
-    <div class="mask"></div>
+    <img :src="imgUrl" />
+    <div class="event" ref="event" @mousemove="handleMove"></div>
     <div class="big">
-      <img src="../images/s1.png" />
+      <img :src="bigImgUrl" ref="bigImg" />
     </div>
-    <div class="small"></div>
+    <div class="mask" ref="mask"></div>
   </div>
 </template>
 
 <script>
+  //引入throttle
+  import throttle from 'lodash/throttle'
+
   export default {
     name: "Zoom",
+    props:{
+      imgUrl:String,
+      bigImgUrl:String
+    },
+    mounted () {
+      //获取event图片宽度
+      this.maskWidth=this.$refs.event.clientWidth/2
+
+    },
+    methods: {
+      //鼠标移动
+      handleMove:throttle(function(event){
+        const {offsetX,offsetY}=event
+        //计算mask宽度
+        const maskWidth=this.maskWidth
+        //设置left和top
+        let left=0
+        let top=0
+        left=offsetX-maskWidth/2
+        top=offsetY-maskWidth/2
+
+        //限制范围
+        if(left<0){
+          left=0
+        }else if(left>maskWidth){
+          left=maskWidth
+        }
+        if(top<0){
+          top=0
+        }else if(top>maskWidth){
+          top=maskWidth
+        }
+
+        //读取mask
+        const maskDiv=this.$refs.mask
+        maskDiv.style.left=left+'px'
+        maskDiv.style.top=top+'px'
+
+        //获取大图
+        const bigImg=this.$refs.bigImg
+        bigImg.style.left=-2*left+'px'
+        bigImg.style.top=-2*top+'px'
+
+
+      },50)     
+    }
   }
 </script>
 
@@ -24,7 +73,7 @@
       height: 100%
     }
 
-    .mask {
+    .event {
       width: 100%;
       height: 100%;
       position: absolute;
@@ -33,7 +82,7 @@
       z-index: 999;
     }
 
-    .small {
+    .mask {
       width: 50%;
       height: 50%;
       background-color: rgba(0, 255, 0, 0.3);
@@ -53,6 +102,7 @@
       overflow: hidden;
       z-index: 998;
       display: none;
+      background: white;
 
       img {
         width: 200%;
@@ -64,8 +114,8 @@
       }
     }
 
-    .mask:hover~.small,
-    .mask:hover~.big {
+    .event:hover~.mask,
+    .event:hover~.big {
       display: block;
     }
   }

@@ -8,7 +8,8 @@ import Login from '@/pages/Login'
 import Search from '@/pages/Search'
 //引入Detail
 import Detail from '@/pages/Detail'
-
+//引入
+import AddCartSuccess from '@/pages/AddCartSuccess'
 
 export default [
   //首页路由
@@ -43,6 +44,11 @@ export default [
     name:'Detail',
     path:'/Detail/:skuId', 
     component:Detail
+  },
+  //添加路由
+  {
+    path:'/addcartsuccess', 
+    component:AddCartSuccess
   },
   //重定向路由
   {
