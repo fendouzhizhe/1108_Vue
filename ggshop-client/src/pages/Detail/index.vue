@@ -373,16 +373,57 @@
         this.currentImageIndex=index
       },
       //添加购物车
-      addToCart(){
-        let query={skuId:this.skuInfo.id,skuNum:this.skuNum}
+      async addToCart(){
+        const query={skuId:this.skuInfo.id,skuNum:this.skuNum}
         //发送请求
-        this.$store.dispatch('addToCart',query)
-        //跳转购物车
-        this.$router.push({
-          path:'/addcartsuccess',
-          query
-        })
+        const errorMsg=await this.$store.dispatch('addToCart',query) 
+        if(!errorMsg){
+          //成功缓存
+          window.sessionStorage.setItem('SKU_INFO',JSON.stringify(this.skuInfo))
+
+          //跳转购物车
+          this.$router.push({
+            path:'/addcartsuccess',
+            query
+          })
+        }else{
+          alert(errorMsg)
+        }
+        // this.callback(errorMsg)
       },
+      // callback(errorMsg){
+      //   const query={skuId:this.skuInfo.id,skuNum:this.skuNum}
+      //   if(!errorMsg){
+      //     //成功跳转购物车
+      //     this.$router.push({
+      //       path:'/addcartsuccess',
+      //       query
+      //     })
+      //   }else{
+      //     alert(errorMsg)
+      //   }
+      // },
+
+      //添加购物车
+      // addToCart(){
+      //   const query={skuId:this.skuInfo.id,skuNum:this.skuNum}
+      //   //发送请求
+      //   this.$store.dispatch('addToCart',{...query,callback:this.callback})
+        
+        
+      // },
+      // callback(errorMsg){
+      //   const query={skuId:this.skuInfo.id,skuNum:this.skuNum}
+      //   if(!errorMsg){
+      //     //成功跳转购物车
+      //     this.$router.push({
+      //       path:'/addcartsuccess',
+      //       query
+      //     })
+      //   }else{
+      //     alert(errorMsg)
+      //   }
+      // },
 
       getTxt(attr){
         return attr.saleAttrName==='选择颜色'?'色':''

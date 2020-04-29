@@ -4,6 +4,7 @@ import axios from 'axios'
 import Nprogress from 'nprogress'
 
 import 'nprogress/nprogress.css'
+import store from '@/store'
 
 const ajax=axios.create({
   //前缀路径
@@ -16,6 +17,10 @@ const ajax=axios.create({
 ajax.interceptors.request.use(config=>{
   //显示进度条
   Nprogress.start()
+
+  //请求需要携带usertempId(用户临时凭证)
+  config.headers['userTempId']=store.state.user.userTempId
+
   return config
 })
 

@@ -5,12 +5,12 @@
       <div class="goods">
         <div class="left-good">
           <div class="left-pic">
-            <img src="./images/dp02.png">
-            <!-- <img :src="good.skuDefaultImg"> -->
+            <!-- <img src="./images/dp02.png"> -->
+            <img :src="skuInfo.skuDefaultImg">
           </div>
           <div class="right-info">
-            <p class="title">小米红米 Redmi note8 手机 梦幻蓝 全网通(4GB+64GB)</p>
-            <p class="attr">颜色：WFZ5099IH/5L钛金釜内胆 数量：2</p>
+            <p class="title">{{skuInfo.skuName}}</p>
+            <p class="attr">颜色：WFZ5099IH/5L钛金釜内胆 数量：{{$route.query.skuNum}}</p>
           </div>
         </div>
         <div class="right-gocart">
@@ -18,7 +18,8 @@
           <router-link class="sui-btn btn-xlarge" 
           :to="{name:'detail',
           params:{skuId:$route.query.skuId}}">查看商品详情</router-link>
-          <a href="javascript:" >去购物车结算 > </a>
+          <!-- <a href="javascript:" >去购物车结算 > </a> -->
+          <router-link to="/shopcart">去购物车结算 > </router-link>
         </div>
       </div>
     </div>
@@ -28,6 +29,17 @@
 <script>
   export default {
     name: 'AddCartSuccess',
+    data () {
+      return {
+        skuInfo:{}
+      }
+    },
+    mounted () {
+      //读取
+      this.skuInfo=JSON.parse(window.sessionStorage.getItem('SKU_INFO'))
+      //干掉
+      window.sessionStorage.removeItem('SKU_INFO')
+    }
   }
 </script>
 

@@ -11,6 +11,8 @@ import Detail from '@/pages/Detail'
 //引入
 import AddCartSuccess from '@/pages/AddCartSuccess'
 
+import ShopCart from '@/pages/ShopCart'
+
 export default [
   //首页路由
   {
@@ -49,6 +51,11 @@ export default [
   {
     path:'/addcartsuccess', 
     component:AddCartSuccess
+  },
+  //购物车路由
+  {
+    path:'/shopcart', 
+    component:ShopCart
   },
   //重定向路由
   {
