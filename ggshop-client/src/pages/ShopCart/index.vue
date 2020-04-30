@@ -28,12 +28,16 @@
             <span class="price">{{item.skuPrice}}</span>
           </li>
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
+            <a href="javascript:void(0)" class="mins" 
+            @click="changeItemCount(item,-1)">-</a>
             <input autocomplete="off" 
             type="text" 
             minnum="1" 
-            class="itxt" v-model="item.skuNum" />
-            <a href="javascript:void(0)" class="plus">+</a>
+            class="itxt" :value="item.skuNum" 
+            @change="changeItemCount(item,$event.target.value*1-item.skuNum)" 
+             />
+            <a href="javascript:void(0)" class="plus" 
+            @click="changeItemCount(item,1)">+</a>
           </li>
           <li class="cart-list-con6">
             <span class="sum">{{item.skuPrice*item.skuNum}}</span>
@@ -49,7 +53,8 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" v-model="isAllCheck" />
+        <input class="chooseAll" type="checkbox" 
+        :checked="isAllCheck" @change="checkAll" />
         <span>全选</span>
       </div>
       <div class="option">
@@ -163,6 +168,53 @@
           }
         )
       },
+      //改变
+      async checkAll(event){
+        // const promises=[]
+        // // console.log(event.target.checked);
+        // //获取复选框的选中状态
+        const isChecked=event.target.checked*1
+        // //遍历商品的购物项
+        // this.shopCartList.forEach(item=>{
+        //   const promise=this.$store.dispatch('checkCartItem',{skuId:item.skuId,isChecked})
+        //   promise.push(promise)
+        // })
+
+        // 数组的方法
+        // const promises=this.shopCartList.reduce((pre,item)=>{
+        //   const promise=this.$store.dispatch('checkCartItem',{skuId:item.skuId,isChecked})
+        //   pre.push(promise)
+        //   return pre
+        // },[])
+
+        //数组的map方法
+        const promises=this.shopCartList.map(item=>{
+          return this.$store.dispatch('checkCartItem',
+          {skuId:item.skuId,isChecked})
+        })
+        try{
+          await Promise.all(promises)
+          //重新发送请求获取购物车的数据
+          this.getShopCartList()
+        }catch(error){
+          alert(error.message)
+        }
+        
+      },
+      //修改
+      async changeItemCount(item,changeNum){
+        const {skuId}=item
+        //判断修改后的数据
+        if(item.skuNum+changeNum>0){
+          const errorMsg=await this.$store.dispatch('addToCart',{skuId,skuNum:changeNum})
+          if(!errorMsg){
+            this.getShopCartList()
+          }else{
+            alert(errorMsg)
+          }
+        }
+      },
+      
 
 
 

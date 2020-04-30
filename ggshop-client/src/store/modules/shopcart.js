@@ -35,6 +35,14 @@ const actions={
       throw new Error('删除购物项失败')
       // return Promise.reject(new Error('删除购物项失败'))
     }
+  },
+  //切换购物项的选中状态
+  async checkCartItem({commit},{skuId,isChecked}){
+    const result=await reqCheckCartItem(skuId,isChecked)
+    //处理失败的情况
+    if(result.code!==200){
+      throw new Error('切换选中状态失败')
+    }
   }
 }
 // const actions={
