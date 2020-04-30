@@ -38,7 +38,7 @@
       //读取
       this.skuInfo=JSON.parse(window.sessionStorage.getItem('SKU_INFO'))
       //干掉
-      window.sessionStorage.removeItem('SKU_INFO')
+      // window.sessionStorage.removeItem('SKU_INFO')
     }
   }
 </script>
