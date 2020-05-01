@@ -41,3 +41,9 @@ export const reqCartList = ()=>ajax.get(`/cart/cartList`)
 export const reqCheckCartItem = (skuId,isChecked)=>ajax.get(`/cart/checkCart/${skuId}/${isChecked}`)
 // 删除购物车商品接口
 export const reqDeleteCartItem =(skuId)=>ajax.delete(`/cart/deleteCart/${skuId}`)
+
+
+// 注册接口
+export const reqRegister = (userInfo) => ajax.post('/user/passport/register', userInfo)
+// 退出接口
+export const reqLogout = () => ajax.get('/user/passport/logout')

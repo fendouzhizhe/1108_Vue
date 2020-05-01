@@ -98,11 +98,8 @@
                 />
               </li>
             </ul>
-            <a
-              href="##"
-              class="register"
-              >立即注册</a
-            >
+            <!-- <a href="##" class="register">立即注册</a> -->
+            <router-link class="register" to="/register">立即注册</router-link>
           </div>
         </div>
       </div>

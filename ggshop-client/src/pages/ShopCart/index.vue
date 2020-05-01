@@ -202,16 +202,26 @@
         
       },
       //修改
-      async changeItemCount(item,changeNum){
+      // async changeItemCount(item,changeNum){
+      //   const {skuId}=item
+      //   //判断修改后的数据
+      //   if(item.skuNum+changeNum>0){
+      //     const errorMsg=await this.$store.dispatch(
+      //       'addToCart',
+      //       {skuId,skuNum:changeNum}
+      //     )
+      //     if(!errorMsg){
+      //       this.getShopCartList()
+      //     }else{
+      //       alert(errorMsg)
+      //     }
+      //   }
+      // },
+      changeItemCount(item,changeNum){
         const {skuId}=item
         //判断修改后的数据
         if(item.skuNum+changeNum>0){
-          const errorMsg=await this.$store.dispatch('addToCart',{skuId,skuNum:changeNum})
-          if(!errorMsg){
-            this.getShopCartList()
-          }else{
-            alert(errorMsg)
-          }
+          this.$store.dispatch('addToCart',{skuId,skuNum:changeNum})
         }
       },
       

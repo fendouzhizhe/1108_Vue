@@ -2,38 +2,85 @@
   <!-- 注册内容 -->
 			<div class="register">
 				<h3>注册新用户
-					<span class="go">我有账号，去 <a href="login.html" target="_blank">登陆</a>
+					<span class="go">我有账号，去 
+						<!-- <a href="login.html" target="_blank">登陆</a> -->
+						<router-link to="/login">登录</router-link>
 					</span>
 				</h3>
 				<div class="content">
 					<label>手机号:</label>
-					<input type="text" placeholder="请输入你的手机号">
+					<input type="text" placeholder="请输入你的手机号" v-model="mobile" />
 				</div>
 				<div class="content">
 					<label>验证码:</label>
-					<input type="text" placeholder="请输入验证码">
-					<img ref="code" src="http://47.93.148.192/api/user/passport/code" alt="code">
+					<input type="text" placeholder="请输入验证码" v-model="code" />
+					<img ref="code" src="/api/user/passport/code" 
+					alt="code" @click="updateCode" />
 				</div>
 				<div class="content">
 					<label>登录密码:</label>
-					<input type="text" placeholder="请输入你的登录密码">
+					<input type="password" placeholder="请输入你的登录密码" v-model="password" />
 				</div>
 				<div class="content">
 					<label>确认密码:</label>
-					<input type="text" placeholder="请输入确认密码">
+					<input type="password" placeholder="请输入确认密码" v-model="password2" />
 				</div>
 				<div class="controls">
-					<input name="m1" type="checkbox">
+					<input name="m1" type="checkbox" v-model="isAgree" />
 					<span>同意协议并注册《尚品汇用户协议》</span>
 				</div>
 				<div class="btn">
-					<a href="javascript:">完成注册</a>
+					<a href="javascript:" @click="register">完成注册</a>
 				</div>
 			</div>
 </template>
 <script>
 export default {
-  name: 'Register'
+	name: 'Register',
+	data () {
+		return {
+			//手机号码
+			mobile:'13522136521',
+			//密码
+			password:'123456',
+			//确认密码
+			password2:'123456',
+			//图形验证码
+			code:'',
+			//是否同意协议
+			isAgree:true
+		}
+	},
+	methods: {
+		// 更新图形验证码
+    updateCode() {
+      this.$refs.code.src = '/api/user/passport/code?time=' + Date.now()
+    },
+		//注册
+		async register(){
+			// 获取文本框中的数据
+			const { mobile, password, password2, code, isAgree } = this
+			// 判断是否同意
+      if (!isAgree) {
+        alert('必须同意')
+        return
+      }
+      // 判断密码是否一致
+      if (password !== password2) {
+        alert('两次密码不一致')
+        return
+      } else {
+        try {
+          // 发送请求了
+          await this.$store.dispatch('register', { mobile, password, code })
+          // 路由跳转
+          this.$router.replace('/login')
+        } catch (error) {
+          alert(error.message)
+        }
+      }
+		}
+	}
 }
 </script>
 <style lang="less" rel="stylesheet/less" scoped>

@@ -11,9 +11,18 @@ const mutations={
   }
 }
 const actions={
-  async addToCart({commit},{skuId,skuNum}){
+  //添加商品操作
+  // async addToCart({commit},{skuId,skuNum}){
+  //   const result=await reqAddToCart(skuId,skuNum)
+  //   return result.code===200?'':(result.message||'添加购物车失败')
+  // },
+  async addToCart({commit,dispatch},{skuId,skuNum}){
     const result=await reqAddToCart(skuId,skuNum)
-    return result.code===200?'':(result.message||'添加购物车失败')
+    if(result.code===200){
+      dispatch('getShopCartList')
+    }else{
+      alert(result.message||'失败')
+    }
   },
   //获取购物车商品数据
   async getShopCartList({commit}){
