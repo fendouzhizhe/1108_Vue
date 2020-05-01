@@ -9,11 +9,14 @@
 				</h3>
 				<div class="content">
 					<label>手机号:</label>
-					<input type="text" placeholder="请输入你的手机号" v-model="mobile" />
+					<input type="text" placeholder="请输入你的手机号" 
+					v-model="mobile" v-validate="'required'" name="mobile" />
+					<span v-show="errors.has('mobile')" class="help is-danger"></span>
 				</div>
 				<div class="content">
 					<label>验证码:</label>
-					<input type="text" placeholder="请输入验证码" v-model="code" />
+					<input type="text" placeholder="请输入验证码" 
+					v-model="code" />
 					<img ref="code" src="/api/user/passport/code" 
 					alt="code" @click="updateCode" />
 				</div>
