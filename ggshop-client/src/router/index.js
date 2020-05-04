@@ -5,7 +5,8 @@ import VueRouter from 'vue-router'
 
 //引入路由器
 import routes from './routes'
-
+// 引入store
+import store from '../store'
 
 // 解决路由跳转的bug
 const originPush = VueRouter.prototype.push
@@ -27,7 +28,7 @@ VueRouter.prototype.replace = function (location, onComplete, onAbort = () => { 
 //声明路由
 Vue.use(VueRouter)
 //暴露路由
-export default new VueRouter({
+const router = new VueRouter({
   mode:'history',
   routes,
   scrollBehavior (to, from, savedPosition) {
@@ -38,3 +39,26 @@ export default new VueRouter({
     }
   }
 })
+
+router.beforeEach((to, from, next) => {
+  // 要检测的路由地址
+  const checkPath = ['/trade', '/pay', '/center']
+  // 目标路由地址
+  const targetPath = to.path
+  if (checkPath.find(path => targetPath.indexOf(path) === 0)) {
+    // 判断是否登录了
+    if (store.state.user.userInfo.name) {
+      next()
+    } else {
+      next('/login?redirect=' + targetPath)
+    }
+  } else {
+    // 正常的放行
+    next()
+  }
+
+})
+
+
+// 暴露
+export default router

@@ -14,13 +14,17 @@ const ajax=axios.create({
 })
 
 //请求拦截器
-ajax.interceptors.request.use(config=>{
-  //显示进度条
-  Nprogress.start()
-
-  //请求需要携带usertempId(用户临时凭证)
-  config.headers['userTempId']=store.state.user.userTempId
-
+ajax.interceptors.request.use(config => {
+  // 显示进度条
+  Nprogress.start() 
+  // 用户临时id凭证
+  config.headers['userTempId'] = store.state.user.userTempId 
+  
+  const token = store.state.user.userInfo.token
+ 
+  if (token) {
+    config.headers['token'] = token
+  }
   return config
 })
 
