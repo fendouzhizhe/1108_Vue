@@ -31,7 +31,11 @@
               <input
                 type="text"
                 placeholder="邮箱/用户名/手机号"
+                v-model="mobile"
+                name="mobile"
+                v-validate="'required|checkMobile'"
               />
+              <p style="color:red">{{errors.first('mobile')}}</p>
             </div>
             <div
               class="input-text clearFix"
@@ -42,7 +46,11 @@
               <input
                 type="text"
                 placeholder="请输入密码"
+                v-model="password"
+                name="password"
+                v-validate="'required'"
               />
+              <p style="color:red">{{errors.first('password')}}</p>
             </div>
             <div
               class="setting clearFix"
@@ -65,6 +73,7 @@
             </div>
             <button
               class="btn"
+              @click="login"
             >
               登&nbsp;&nbsp;录
             </button>
@@ -109,6 +118,36 @@
 <script>
 export default {
   name: "Login",
+  data () {
+		return {
+			//手机号码
+			mobile:'13522136521',
+			//密码
+			password:'123456',
+			//确认密码
+			password2:'123456',
+			//图形验证码
+			code:'',
+			//是否同意协议
+			isAgree:true
+		}
+  },
+  methods: {
+    login(){
+      const {mobile,password} =this
+      if(mobile!==''&&password!==''){
+        this.$store.dispatch('login',{mobile,password})
+        .then(()=>{
+          this.$router.replace('/')
+        })
+        .catch(error=>{
+          alert(error)
+        })
+      }else{
+        alert('手机号或者密码不能为空')
+      }
+    }
+  }
 };
 </script>
 <style

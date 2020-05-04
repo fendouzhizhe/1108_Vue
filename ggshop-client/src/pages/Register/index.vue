@@ -9,16 +9,22 @@
 				</h3>
 				<div class="content">
 					<label>手机号:</label>
-					<input type="text" placeholder="请输入你的手机号" 
-					v-model="mobile" v-validate="'required'" name="mobile" />
-					<span v-show="errors.has('mobile')" class="help is-danger"></span>
+					<input 
+					type="text" 
+					placeholder="请输入你的手机号" 
+					v-model="mobile" 
+					v-validate="'required|checkMobile'" 
+					name="mobile" />
+					<span style="color:red">{{errors.first('mobile')}}</span>
 				</div>
 				<div class="content">
 					<label>验证码:</label>
 					<input type="text" placeholder="请输入验证码" 
-					v-model="code" />
+					v-model="code" v-validate="'required|checkCode'" 
+					name="code" />
 					<img ref="code" src="/api/user/passport/code" 
 					alt="code" @click="updateCode" />
+					<span style="color:red">{{errors.first('code')}}</span>
 				</div>
 				<div class="content">
 					<label>登录密码:</label>
@@ -73,7 +79,10 @@ export default {
         alert('两次密码不一致')
         return
       } else {
-        try {
+				const names=['mobile','password','password2','code']
+				const success=await this.$validator.validateAll(names)
+				if(success){
+					try {
           // 发送请求了
           await this.$store.dispatch('register', { mobile, password, code })
           // 路由跳转
@@ -81,6 +90,7 @@ export default {
         } catch (error) {
           alert(error.message)
         }
+				}
       }
 		}
 	}
