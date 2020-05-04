@@ -3,30 +3,18 @@
   <div class="login-wrap">
     <div class="login">
       <div class="loginform">
-        <ul
-          class="tab clearFix"
-        >
+        <ul class="tab clearFix">
           <li>
-            <a
-              href="##"
-              style="border-right: 0;"
-              >扫描登录</a
-            >
+            <a href="##" style="border-right: 0;">扫描登录</a>
           </li>
           <li>
-            <a
-              href="##"
-              class="current"
-              >账户登录</a
-            >
+            <a href="##" class="current">账户登录</a>
           </li>
         </ul>
 
         <div class="content">
           <form action="##">
-            <div
-              class="input-text clearFix"
-            >
+            <div class="input-text clearFix">
               <span></span>
               <input
                 type="text"
@@ -37,14 +25,10 @@
               />
               <p style="color:red">{{errors.first('mobile')}}</p>
             </div>
-            <div
-              class="input-text clearFix"
-            >
-              <span
-                class="pwd"
-              ></span>
+            <div class="input-text clearFix">
+              <span class="pwd"></span>
               <input
-                type="text"
+                type="password"
                 placeholder="请输入密码"
                 v-model="password"
                 name="password"
@@ -52,63 +36,32 @@
               />
               <p style="color:red">{{errors.first('password')}}</p>
             </div>
-            <div
-              class="setting clearFix"
-            >
-              <label
-                class="checkbox inline"
-              >
-                <input
-                  name="m1"
-                  type="checkbox"
-                  value="2"
-                  checked=""
-                />
+            <div class="setting clearFix">
+              <label class="checkbox inline">
+                <input name="m1" type="checkbox" value="2" checked />
                 自动登录
               </label>
-              <span
-                class="forget"
-                >忘记密码？</span
-              >
+              <span class="forget">忘记密码？</span>
             </div>
-            <button
-              class="btn"
-              @click="login"
-            >
-              登&nbsp;&nbsp;录
-            </button>
+            <button class="btn" @click.prevent="login">登&nbsp;&nbsp;录</button>
           </form>
-          <div
-            class="call clearFix"
-          >
+          <div class="call clearFix">
             <ul>
               <li>
-                <img
-                  src="images/qq.png"
-                  alt=""
-                />
+                <img src="images/qq.png" alt />
               </li>
               <li>
-                <img
-                  src="images/sina.png"
-                  alt=""
-                />
+                <img src="images/sina.png" alt />
               </li>
               <li>
-                <img
-                  src="images/ali.png"
-                  alt=""
-                />
+                <img src="images/ali.png" alt />
               </li>
               <li>
-                <img
-                  src="images/weixin.png"
-                  alt=""
-                />
+                <img src="images/weixin.png" alt />
               </li>
             </ul>
             <!-- <a href="##" class="register">立即注册</a> -->
-            <router-link class="register" to="/register">立即注册</router-link>
+            <router-link to="/register" class="register">立即注册</router-link>
           </div>
         </div>
       </div>
@@ -116,6 +69,8 @@
   </div>
 </template>
 <script>
+// 引入store
+import store from '../../store'
 export default {
   name: "Login",
   data () {
@@ -133,20 +88,43 @@ export default {
 		}
   },
   methods: {
-    login(){
-      const {mobile,password} =this
-      if(mobile!==''&&password!==''){
-        this.$store.dispatch('login',{mobile,password})
-        .then(()=>{
-          this.$router.replace('/')
-        })
-        .catch(error=>{
-          alert(error)
-        })
-      }else{
-        alert('手机号或者密码不能为空')
+    // 登录操作
+    login() {
+      // 先获取手机号码和密码
+      const { mobile, password } = this
+      if (mobile !== '' && password !== '') {
+        this.$store
+          .dispatch('login', { mobile, password })
+          .then(() => {
+            // 成功了,就要进行跳转,默认跳转到首页
+            const {redirect} = this.$route.query
+            
+            this.$router.replace(redirect|| '/')
+          })
+          .catch(error => {
+            alert(error)
+          })
+      } else {
+        alert('手机号或者密码是不能为空的')
       }
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    // if (store.state.user.userInfo.name) {
+    //   next('/')
+    // }else{
+    //   next()
+    // }
+    next(vm => {
+      // 判断用户是否已经登录
+      if (vm.$store.state.user.userInfo.name) {
+        // 如果登录了,再访问login,就跳转到首页
+        next('/')
+      } else {
+        // 没有登录
+        next()
+      }
+    })
   }
 };
 </script>

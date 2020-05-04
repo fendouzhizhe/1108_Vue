@@ -1,58 +1,66 @@
 <template>
     <header class="header">
-        <!-- 头部的第一行 -->
-        <div class="top">
-            <div class="container">
-                <div class="loginList">
-                    <p>尚品汇欢迎您！</p>
-                    <p>
-                        <span>请</span>
-                        <router-link to="/login">登录</router-link>
-                        <router-link to="/register" 
-                        class="register">免费注册</router-link>
-                        <!-- <a href="###">登录</a>
-                        <a href="###" class="register">免费注册</a> -->
-                    </p>
-                </div>
-                <div class="typeList">
-                    <a href="###">我的订单</a>
-                    <a href="###">我的购物车</a>
-                    <a href="###">我的尚品汇</a>
-                    <a href="###">尚品汇会员</a>
-                    <a href="###">企业采购</a>
-                    <a href="###">关注尚品汇</a>
-                    <a href="###">合作招商</a>
-                    <a href="###">商家后台</a>
-                </div>
-            </div>
+    <!-- 头部的第一行 -->
+    <div class="top">
+      <div class="container">
+        <div class="loginList">
+          <p>尚品汇欢迎您！</p>
+          <p v-if="userInfo.name">
+            <span>{{userInfo.name}}</span>&nbsp;&nbsp;&nbsp;
+            <a href="avascript:;" @click="logout">退出</a>
+          </p>
+          <p v-else>
+            <span>请</span>
+            <router-link to="/login">登录</router-link>
+            <router-link to="/register" class="register">免费注册</router-link>
+            <!-- <a href="###">登录</a>
+            <a href="###" class="register">免费注册</a>-->
+          </p>
         </div>
-        <!--头部第二行 搜索区域-->
-        <div class="bottom">
-            <h1 class="logoArea">
-                <router-link class="logo" to="/">
-                    <img src="./images/Logo.png" alt />
-                </router-link>
-            </h1>
-            <div class="searchArea">
-                <form action="###" class="searchForm">
-                    <input type="text" 
-                    id="autocomplete" 
-                    class="input-error input-xxlarge" 
-                    v-model="keyword" /> 
-                    <button class="sui-btn btn-xlarge btn-danger" 
-                    type="button" @click="toSearch">搜索</button>
-                </form>
-            </div>
+        <div class="typeList">
+          <!-- <a href="###">我的订单</a>
+          <a href="###">我的购物车</a> -->
+          <router-link to="/center">我的订单</router-link>
+          <router-link to="/shopcart">我的购物车</router-link>
+          <a href="###">我的尚品汇</a>
+          <a href="###">尚品汇会员</a>
+          <a href="###">企业采购</a>
+          <a href="###">关注尚品汇</a>
+          <a href="###">合作招商</a>
+          <a href="###">商家后台</a>
         </div>
-    </header>
+      </div>
+    </div>
+    <!--头部第二行 搜索区域-->
+    <div class="bottom">
+      <h1 class="logoArea">
+        <router-link class="logo" to="/">
+          <img src="./images/Logo.png" alt />
+        </router-link>
+      </h1>
+      <div class="searchArea">
+        <form action="###" class="searchForm">
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="toSearch">搜索</button>
+        </form>
+      </div>
+    </div>
+  </header>
 </template>
 <script>
+// 引入vuex辅助函数
+import {mapState} from 'vuex'
 export default {
   name: 'Header',
   data() {
     return {
         keyword: ''
     }
+  },
+  computed: {
+    ...mapState({
+      userInfo:state=>state.user.userInfo
+    })
   },
   //方法
   methods: {
@@ -88,8 +96,20 @@ export default {
         }
         //没有记录
         //   this.$router.replace()
+    },
+    async logout(){
+      if(window.confirm('确定退出吗')){
+        try {
+          await this.$store.dispatch('logout')
+          // 已经退出成功了,自动的跳转到首页
+          this.$router.replace('/')
+        } catch (error) {
+          alert(error.message)
+        }
+      }
     }
   },
+  //页面加载后的生命周期回调
   mounted(){
     this.$bus.$on('removeKeyword',()=>{
         this.keyword=''
