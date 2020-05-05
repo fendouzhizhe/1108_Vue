@@ -115,6 +115,7 @@ export default [
   {
     path: '/pay',
     component: Pay,
+    props: route => ({ orderId: route.query.orderId }),
     // 跳转到支付界面(pay)
     beforeEnter: (to, from, next) => {
       // 判断是从哪个路径跳转到的pay

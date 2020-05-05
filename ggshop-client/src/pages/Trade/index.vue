@@ -5,7 +5,7 @@
       <h5 class="receive">收件人信息</h5>
       <div
         class="address clearFix"
-        v-for="addr in tradeInfo.userAddressList"
+        v-for="(addr,index) in tradeInfo.userAddressList"
         :key="addr.id"
       >
         <span class="username" 
@@ -35,7 +35,7 @@
         <h5>商品清单</h5>
         <ul
           class="list clearFix"
-          v-for="item in tradeInfo.detailArrayList"
+          v-for="(item,index) in tradeInfo.detailArrayList"
           :key="item.skuId"
         >
           <li>
@@ -138,8 +138,6 @@
       // 提交订单操作
       async submitOrder() {
         // 收集接口需要的参数数据
-        // tradeNo---订单编号
-        // orderInfo---对象----中有好多的参数数据
         const { tradeNo, detailArrayList } = this.tradeInfo
         const { consignee, phoneNum, userAddress } = this.selectedAddr
         const orderInfo = {
@@ -150,7 +148,7 @@
           orderComment: this.orderComment, // 订单的备注
           orderDetailList: detailArrayList // 存储多个商品对象的数组
         }
-        // 调用接口,用来提交订单的请求
+        // 调用接口
         const result = await this.$API.reqSubmitOrder(tradeNo, orderInfo)
         // 如果成功了则跳转到支付页面
         if (result.code === 200) {

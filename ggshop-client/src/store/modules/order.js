@@ -9,11 +9,11 @@ const state = {
 }
 const mutations = {
   // 直接修改订单信息
-  RECEIVE_TRADE_INFO (state, { tradeInfo }) {
+  RECEIVE_TRADE_INFO (state, tradeInfo) {
     state.tradeInfo = tradeInfo
   },
   // 直接修改支付信息
-  RECEIVE_PAY_INFO (state, { payInfo }) {
+  RECEIVE_PAY_INFO (state, payInfo) {
     state.payInfo = payInfo
   },
 }
@@ -23,7 +23,7 @@ const actions = {
     const result = await reqTradeInfo()
     if (result.code === 200) {
       const tradeInfo = result.data
-      commit('RECEIVE_TRADE_INFO', { tradeInfo })
+      commit('RECEIVE_TRADE_INFO',tradeInfo)
     }
   },
 
@@ -32,7 +32,7 @@ const actions = {
     const result = await reqPayInfo(orderId)
     if (result.code === 200) {
       const payInfo = result.data
-      commit('RECEIVE_PAY_INFO', { payInfo })
+      commit('RECEIVE_PAY_INFO', payInfo)
     }
   }
 }

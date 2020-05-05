@@ -18,7 +18,8 @@
       </table>
     </div>
     <div class="orders">
-      <table class="order-item" v-for="(order,index) in orders" :key="order.id">
+      <table class="order-item" v-for="(order,index) in orders" 
+      :key="order.id">
         <thead>
           <tr>
             <th colspan="5">
@@ -180,7 +181,7 @@ export default {
       //订单总数
       total:0,
       //当前页的订单总数组
-      order:[]
+      orders:[]
     }
   },
   mounted(){
@@ -188,7 +189,7 @@ export default {
     this.getMyOrders()
   },
   methods: {
-    async getMyOrders(){
+    async getMyOrders(pageNo = 1){
       this.page=pageNo
       //获取订单数据
       const result=await this.$API.reqMyOrders(this.page,this.limit)
@@ -197,7 +198,7 @@ export default {
         const {total,records}=result.data
         //更新数据
         this.total=total
-        this.orders=orders
+        this.orders=records
       }
     }
   }
