@@ -7,18 +7,31 @@
           <span class="success-info">订单提交成功，请您及时付款，以便尽快为您发货~~</span>
         </h4>
         <div class="paymark">
-          <span class="fl">请您在提交订单<em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：<em>145687</em></span>
-          <span class="fr"><em class="lead">应付金额：</em><em class="orange money">￥17,654</em></span>
+          <span class="fl">
+            请您在提交订单
+            <em class="orange time">4小时</em>之内完成支付，超时订单会自动取消。订单号：
+            <em>145687</em>
+          </span>
+          <span class="fr">
+            <em class="lead">应付金额：</em>
+            <em class="orange money">￥{{payInfo.totalFee}}</em>
+          </span>
         </div>
       </div>
       <div class="checkout-info">
         <h4>重要说明：</h4>
         <ol>
-          <li>尚品汇商城支付平台目前支持<span class="zfb">支付宝</span>支付方式。</li>
+          <li>
+            尚品汇商城支付平台目前支持
+            <span class="zfb">支付宝</span>支付方式。
+          </li>
           <li>其它支付渠道正在调试中，敬请期待。</li>
           <li>为了保证您的购物支付流程顺利完成，请保存以下支付宝信息。</li>
         </ol>
-        <h4>支付宝账户信息：（很重要，<span class="save">请保存！！！</span>）</h4>
+        <h4>
+          支付宝账户信息：（很重要，
+          <span class="save">请保存！！！</span>）
+        </h4>
         <ul>
           <li>支付帐号：11111111</li>
           <li>密码：111111</li>
@@ -31,10 +44,13 @@
         </div>
         <div class="step-cont">
           <ul class="payType">
-            <li><img src="./images/pay2.jpg"></li>
-            <li><img src="./images/pay3.jpg"></li>
+            <li>
+              <img src="./images/pay2.jpg" />
+            </li>
+            <li>
+              <img src="./images/pay3.jpg" />
+            </li>
           </ul>
-
         </div>
         <div class="hr"></div>
 
@@ -44,35 +60,36 @@
           </div>
           <div class="step-cont">
             <ul class="payType">
-              <li><img src="./images/pay10.jpg"></li>
-              <li><img src="./images/pay11.jpg"></li>
-              <li><img src="./images/pay12.jpg"></li>
-              <li><img src="./images/pay13.jpg"></li>
-              <li><img src="./images/pay14.jpg"></li>
-              <li><img src="./images/pay15.jpg"></li>
-              <li><img src="./images/pay16.jpg"></li>
-              <li><img src="./images/pay17.jpg"></li>
-              <li><img src="./images/pay18.jpg"></li>
-              <li><img src="./images/pay19.jpg"></li>
-              <li><img src="./images/pay20.jpg"></li>
-              <li><img src="./images/pay21.jpg"></li>
-              <li><img src="./images/pay22.jpg"></li>
-
+              <li><img src="./images/pay10.jpg" /></li>
+              <li><img src="./images/pay11.jpg" /></li>
+              <li><img src="./images/pay12.jpg" /></li>
+              <li><img src="./images/pay13.jpg" /></li>
+              <li><img src="./images/pay14.jpg" /></li>
+              <li><img src="./images/pay15.jpg" /></li>
+              <li><img src="./images/pay16.jpg" /></li>
+              <li><img src="./images/pay17.jpg" /></li>
+              <li><img src="./images/pay18.jpg" /></li>
+              <li><img src="./images/pay19.jpg" /></li>
+              <li><img src="./images/pay20.jpg" /></li>
+              <li><img src="./images/pay21.jpg" /></li>
+              <li><img src="./images/pay22.jpg" /></li>
             </ul>
           </div>
-
         </div>
         <div class="hr"></div>
 
         <div class="submit">
-          <router-link class="btn" to="/paysuccess">立即支付</router-link>
+          <!-- <router-link class="btn" to="/paysuccess">立即支付</router-link> -->
+          <a href="javascript:;" class="btn" @click="pay">立即支付</a>
         </div>
         <div class="otherpay">
           <div class="step-tit">
             <h5>其他支付方式</h5>
           </div>
           <div class="step-cont">
-            <span><a href="weixinpay.html" target="_blank">微信支付</a></span>
+            <span>
+              <a href="weixinpay.html" target="_blank">微信支付</a>
+            </span>
             <span>中国银联</span>
           </div>
         </div>
@@ -82,8 +99,85 @@
 </template>
 
 <script>
+  // 引入vuex的辅助函数
+  import { mapState } from 'vuex'
+  // 引入qrcode插件
+  import QRCode from 'qrcode'
   export default {
     name: 'Pay',
+    props: ['orderId'],
+    computed: {
+      ...mapState({
+        payInfo: state => state.order.payInfo
+      })
+    },
+    mounted () {
+      //获取支付信息
+      this.$store.dispatch('getPayInfo', this.orderId)
+    },
+    methods: {
+      // 支付的回调
+      pay() {
+        // 立即支付
+        QRCode.toDataURL(this.payInfo.codeUrl)
+          .then(imgUrl => {
+            // 二维码生成,获取到了base64的图片字符串
+            this.$alert(`<img src="${imgUrl}" />`, '请使用微信扫码支付', {
+              // 解析html标签内容
+              dangerouslyUseHTMLString: true, 
+              // 显示取消按钮
+              showCancelButton: true, 
+              // 在取消按钮中显示提示信息
+              cancelButtonText: '支付中遇到的问题', 
+              // 确定按钮中的提示信息
+              confirmButtonText: '我已成功支付', 
+              // 是否居中显示
+              center: true, 
+              // 是否显示右上角的关闭的x
+              showClose: false 
+            })
+              .then(() => {
+                // 清除定时器
+                clearInterval(this.timeId)
+                // 关闭二维码
+                this.$msgbox.close()
+                // 进行跳转
+                this.$router.push('/paysuccess')
+              })
+              .catch(() => {
+                // 清除定时器
+                clearInterval(this.timeId)
+                this.$message.warning('请联系前台')
+              })
+            // 获取支付的订单状态
+            this.timeId = setInterval(() => {
+              // 调用接口
+              this.$API.reqOrderStatus(this.orderId)
+                .then(result => {
+                  if (result.code === 200) {
+                    // 清除定时器
+                    clearInterval(this.timeId)
+                    // 关闭二维码
+                    this.$msgbox.close()
+                    // 跳转界面
+                    this.$router.push('/paysuccess')
+                    // 成功的提示信息
+                    this.$message.success('支付成功')
+                  }
+                })
+                .catch(error => {
+                  // 清除定时器
+                  clearInterval(this.timeId)
+                  // 失败的提示信息
+                  this.$message.error('获取订单失败')
+                })
+            }, 3000)
+          })
+          .catch(error => {
+            this.$message.error('支付二维码生成失败')
+          })
+      }
+    }
   }
 </script>
 

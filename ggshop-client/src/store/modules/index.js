@@ -8,11 +8,14 @@ import search from './search'
 import detail from './detail'
 //引入购物车
 import shopcart from './shopcart'
+// 引入order模块
+import order from './order'
 
 export default{
   home,
   user,
   search,
   detail,
-  shopcart
+  shopcart,
+  order
 }

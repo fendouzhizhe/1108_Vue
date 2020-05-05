@@ -23,6 +23,17 @@ import Pagination from './components/Pagination'
 import './validate'
 //引入接口函数
 import * as API from './api'
+ 
+// 引入elements
+import './elements'
+// 引入图片懒加载的插件包
+import VueLazyload from 'vue-lazyload'
+// 引入图片懒加载要使用的图片
+import loading from './assets/images/loading.gif'
+// 声明使用该插件
+Vue.use(VueLazyload, {
+  loading
+})
 //每个组件实例都可以直接访问接口函数
 Vue.prototype.$API=API
 // 设置浏览器的控制台中是否显示默认提示信息

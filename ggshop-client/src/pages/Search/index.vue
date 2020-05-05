@@ -74,7 +74,8 @@
                     
                     <!-- <router-link :to="{name:`detail`,params:{skuId:goods.id}}"> -->
                     <router-link :to="`/detail/${goods.id}`">
-                      <img :src="goods.defaultImg" />
+                      <!-- <img :src="goods.defaultImg" /> -->
+                      <img v-lazy="goods.defaultImg" />
                     </router-link>
                   </div>
                   <div class="price">

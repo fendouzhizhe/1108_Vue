@@ -3,28 +3,17 @@
     <h3 class="title">填写并核对订单信息</h3>
     <div class="content">
       <h5 class="receive">收件人信息</h5>
-      <div class="address clearFix">
-        <span class="username selected">张三</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">15010658793</span>
-          <span class="s3">默认地址</span>
-        </p>
-      </div>
-      <div class="address clearFix">
-        <span class="username selected">李四</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">13590909098</span>
-          <span class="s3">默认地址</span>
-        </p>
-      </div>
-      <div class="address clearFix">
-        <span class="username selected">王五</span>
-        <p>
-          <span class="s1">北京市昌平区宏福科技园综合楼6层</span>
-          <span class="s2">18012340987</span>
-          <span class="s3">默认地址</span>
+      <div
+        class="address clearFix"
+        v-for="addr in tradeInfo.userAddressList"
+        :key="addr.id"
+      >
+        <span class="username" 
+        :class="{selected:addr===selectedAddr}">{{addr.consignee}}</span>
+        <p @click="selectedAddr=addr">
+          <span class="s1">{{addr.userAddress}}</span>
+          <span class="s2">{{addr.phoneNum}}</span>
+          <span class="s3" v-if="addr.isDefault==='1'">默认地址</span>
         </p>
       </div>
       <div class="line"></div>
@@ -32,7 +21,6 @@
       <div class="address clearFix">
         <span class="username selected">在线支付</span>
         <span class="username" style="margin-left:5px;">货到付款</span>
-
       </div>
       <div class="line"></div>
       <h5 class="pay">送货清单</h5>
@@ -45,41 +33,29 @@
       </div>
       <div class="detail">
         <h5>商品清单</h5>
-        <ul class="list clearFix">
+        <ul
+          class="list clearFix"
+          v-for="item in tradeInfo.detailArrayList"
+          :key="item.skuId"
+        >
           <li>
-            <img src="./images/goods.png" alt="">
+            <img :src="item.imgUrl" alt />
           </li>
           <li>
-            <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金色 移动联通电信4G手机硅胶透明防摔软壳 本色系列</p>
+            <p>{{item.skuName}}</p>
             <h4>7天无理由退货</h4>
           </li>
           <li>
-            <h3>￥5399.00</h3>
+            <h3>￥{{item.orderPrice}}</h3>
           </li>
-          <li>X1</li>
-          <li>有货</li>
-        </ul>
-        <ul class="list clearFix">
-          <li>
-            <img src="./images/goods.png" alt="">
-          </li>
-          <li>
-            <p>
-              Apple iPhone 6s (A1700) 64G 玫瑰金色 移动联通电信4G手机硅胶透明防摔软壳 本色系列</p>
-            <h4>7天无理由退货</h4>
-          </li>
-          <li>
-            <h3>￥5399.00</h3>
-          </li>
-          <li>X1</li>
+          <li>X{{item.skuNum}}</li>
           <li>有货</li>
         </ul>
       </div>
       <div class="bbs">
         <h5>买家留言：</h5>
-        <textarea placeholder="建议留言前先与商家沟通确认" class="remarks-cont"></textarea>
-
+        <textarea placeholder="建议留言前先与商家沟通确认" 
+        class="remarks-cont" v-model="orderComment"></textarea>
       </div>
       <div class="line"></div>
       <div class="bill">
@@ -91,8 +67,10 @@
     <div class="money clearFix">
       <ul>
         <li>
-          <b><i>1</i>件商品，总商品金额</b>
-          <span>¥5399.00</span>
+          <b>
+            <i>{{tradeInfo.totalNum}}</i>件商品，总商品金额
+          </b>
+          <span>¥{{tradeInfo.totalAmount}}</span>
         </li>
         <li>
           <b>返现：</b>
@@ -105,23 +83,87 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:　<span>¥5399.00</span></div>
+      <div class="price">
+        应付金额:
+        <span>¥{{tradeInfo.totalAmount}}</span>
+      </div>
       <div class="receiveInfo">
         寄送至:
-        <span>北京市昌平区宏福科技园综合楼6层</span>
-        收货人：<span>张三</span>
-        <span>15010658793</span>
+        <span>{{selectedAddr.userAddress}}</span>
+        收货人：
+        <span>{{selectedAddr.consignee}}</span>
+        <span>{{selectedAddr.phoneNum}}</span>
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <!-- <router-link class="subBtn" to="/pay">提交订单</router-link> -->
+      <a href="javascript:;" class="subBtn" @click="submitOrder">提交订单</a>
     </div>
   </div>
 </template>
 
 <script>
+  // 引入vuex的辅助函数
+  import { mapState } from 'vuex'
   export default {
     name: 'Trade',
+    data () {
+      return {
+        //存储地址信息
+        selectedAddr: {},
+        //(自己添加的)尽快发货
+        orderComment: '请尽快的发货吧'
+      }
+    },
+    watch: {
+      'tradeInfo.userAddressList': function(value) {
+        // 找出默认的地址
+        const defaultAddr = value.find(addr => addr.isDefault === '1')
+        // 如果有了默认地址数据,那么就及时的更新这个地址信息对象数据
+        if (defaultAddr) {
+          this.selectedAddr = defaultAddr
+        }
+      }
+    },
+    computed: {
+      ...mapState({
+        tradeInfo: state => state.order.tradeInfo
+      })
+    },
+    mounted () {
+      //获取信息对象
+      this.$store.dispatch('getTradeInfo')
+    },
+    methods: {
+      // 提交订单操作
+      async submitOrder() {
+        // 收集接口需要的参数数据
+        // tradeNo---订单编号
+        // orderInfo---对象----中有好多的参数数据
+        const { tradeNo, detailArrayList } = this.tradeInfo
+        const { consignee, phoneNum, userAddress } = this.selectedAddr
+        const orderInfo = {
+          consignee, // 收件人的姓名
+          consigneeTel: phoneNum, // 收件人的电话
+          deliveryAddress: userAddress, // 收件人的地址
+          paymentWay: 'ONLINE', // 支付的方式
+          orderComment: this.orderComment, // 订单的备注
+          orderDetailList: detailArrayList // 存储多个商品对象的数组
+        }
+        // 调用接口,用来提交订单的请求
+        const result = await this.$API.reqSubmitOrder(tradeNo, orderInfo)
+        // 如果成功了则跳转到支付页面
+        if (result.code === 200) {
+          // 返回的是订单号码
+          const orderId = result.data
+          // 跳转到pay的界面
+          this.$router.push({ path: '/pay', query: { orderId } })
+        } else {
+          // 失败了就提示信息
+          alert(result.message || '提交订单失败')
+        }
+      }
+    }
   }
 </script>
 
@@ -254,7 +296,7 @@
       .detail {
         width: 1080px;
 
-        background: #feedef;
+        
         padding: 15px;
         margin: 2px auto 0;
 
@@ -265,6 +307,12 @@
         .list {
           display: flex;
           justify-content: space-between;
+          background: #feedef;
+          margin: 5px 0;
+          img{
+            width:100px;
+            height: 100px;
+          }
 
           li {
             line-height: 30px;

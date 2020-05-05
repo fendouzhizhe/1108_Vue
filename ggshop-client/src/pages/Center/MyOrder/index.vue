@@ -61,7 +61,7 @@
               </td>
             </template>
           </tr>
-          <tr>
+          <!-- <tr>
             <td width="50%">
               <div class="typographic">
                 <img src="./images/goods.png" />
@@ -70,11 +70,11 @@
                 <a href="#" class="service">售后申请</a>
               </div>
             </td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
 
-      <table class="order-item">
+      <!-- <table class="order-item">
         <thead>
           <tr>
             <th colspan="5">
@@ -126,9 +126,9 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
     </div>
-    <div class="choose-order">
+    <!-- <div class="choose-order">
       <div class="pagination">
         <ul>
           <li class="prev disabled">
@@ -155,7 +155,17 @@
           <span>&nbsp;&nbsp;&nbsp;&nbsp;共2页&nbsp;</span>
         </div>
       </div>
-    </div>
+    </div> -->
+    <!--分页组件-->
+    <Pagination
+      :pageConfig="{
+          total,  // 总数量
+          showPageNo:5,  // 连续显示的页码
+          pageNo:page, // 当前的页码
+          pageSize:limit // 每页的条数
+        }"
+      @changeCurrentPage="getMyOrders"
+    />
   </div>
 </template>
 <script>
@@ -179,6 +189,7 @@ export default {
   },
   methods: {
     async getMyOrders(){
+      this.page=pageNo
       //获取订单数据
       const result=await this.$API.reqMyOrders(this.page,this.limit)
       if(result.code===200){
