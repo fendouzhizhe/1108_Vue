@@ -18,12 +18,12 @@
       </table>
     </div>
     <div class="orders">
-      <table class="order-item">
+      <table class="order-item" v-for="(order,index) in orders" :key="order.id">
         <thead>
           <tr>
             <th colspan="5">
               <span class="ordertitle">
-                2017-02-11 11:59 订单编号：7867473872181848
+                {{order.createTime}} 订单编号：{{order.outTradeNo}}
                 <span class="pull-right delete">
                   <img src="./images/delete.png" />
                 </span>
@@ -32,32 +32,34 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr v-for="(item,index) in order.orderDetailList" :key="item.id">
             <td width="60%">
               <div class="typographic">
-                <img src="./images/goods.png" />
-                <a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a>
-                <span>x1</span>
-                <a href="#" class="service">售后申请</a>
+                <img :src="item.imgUrl" />
+                <a href="#" class="block-text">包邮 {{item.skuName}}</a>
+                <span>{{item.skuNum}}</span>
+                <a href="#" class="service">{{item.orderPrice}}</a>
               </div>
             </td>
-            <td rowspan="2" width="8%" class="center">小丽</td>
-            <td rowspan="2" width="13%" class="center">
-              <ul class="unstyled">
-                <li>总金额¥138.00</li>
-                <li>在线支付</li>
-              </ul>
-            </td>
-            <td rowspan="2" width="8%" class="center">
-              <a href="#" class="btn">已完成</a>
-            </td>
-            <td rowspan="2" width="13%" class="center">
-              <ul class="unstyled">
-                <li>
-                  <a href="mycomment.html" target="_blank">评价|晒单</a>
-                </li>
-              </ul>
-            </td>
+            <template v-if="index===0">
+              <td :rowspan="order.orderDetailList.length" width="8%" class="center">{{order.consignee}}</td>
+              <td :rowspan="order.orderDetailList.length" width="13%" class="center">
+                <ul class="unstyled">
+                  <li>总金额¥{{order.totalAmount}}</li>
+                  <li>{{order.paymentWay==='ONLINE'?'在线支付':'货到付款'}}</li>
+                </ul>
+              </td>
+              <td :rowspan="order.orderDetailList.length" width="8%" class="center">
+                <a href="#" class="btn">{{order.orderStatus==='UNPAID'?'未支付':'已支付'}}</a>
+              </td>
+              <td :rowspan="order.orderDetailList.length" width="13%" class="center">
+                <ul class="unstyled">
+                  <li>
+                    <a href="mycomment.html" target="_blank">评价|晒单</a>
+                  </li>
+                </ul>
+              </td>
+            </template>
           </tr>
           <tr>
             <td width="50%">
@@ -158,7 +160,37 @@
 </template>
 <script>
 export default {
-  name: 'MyOrder'
+  name: 'MyOrder',
+  data () {
+    return {
+      //页码数
+      page:1,
+      //每页的条数
+      limit:5,
+      //订单总数
+      total:0,
+      //当前页的订单总数组
+      order:[]
+    }
+  },
+  mounted(){
+    //获取订单列表数据
+    this.getMyOrders()
+  },
+  methods: {
+    async getMyOrders(){
+      //获取订单数据
+      const result=await this.$API.reqMyOrders(this.page,this.limit)
+      if(result.code===200){
+        //获取订单总数
+        const {total,records}=result.data
+        //更新数据
+        this.total=total
+        this.orders=orders
+      }
+    }
+  }
+
 }
 </script>
 <style lang="less" rel="stylesheet/less" scoped>

@@ -21,6 +21,10 @@ import Carousel from './components/Carousel'
 import Pagination from './components/Pagination'
 // 引入vue表单验证的插件
 import './validate'
+//引入接口函数
+import * as API from './api'
+//每个组件实例都可以直接访问接口函数
+Vue.prototype.$API=API
 // 设置浏览器的控制台中是否显示默认提示信息
 Vue.config.productionTip = false
 //注册全局组件
